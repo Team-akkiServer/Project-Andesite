@@ -1,0 +1,17 @@
+<configuration>
+
+    <!-- コンソールにログを色付きで出力 -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss} %highlight(%-5level) %cyan([%thread]) %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <!-- ルートロガーの設定 -->
+    <root level="debug">
+        <appender-ref ref="console"/>
+    </root>
+
+</configuration>
