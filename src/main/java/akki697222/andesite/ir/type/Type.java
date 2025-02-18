@@ -1,6 +1,6 @@
-package akki697222.andesite.core.type;
+package akki697222.andesite.ir.type;
 
-import akki697222.andesite.core.type.primitive.PrimitiveType;
+import akki697222.andesite.ir.type.primitive.PrimitiveType;
 
 public interface Type {
     String STRING = "string";

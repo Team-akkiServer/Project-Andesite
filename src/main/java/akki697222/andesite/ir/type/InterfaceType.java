@@ -1,6 +1,6 @@
-package akki697222.andesite.core.type;
+package akki697222.andesite.ir.type;
 
-public record ClassType(String name) implements Type {
+public record InterfaceType(String name) implements Type {
     @Override
     public boolean isPrimitive() {
         return false;

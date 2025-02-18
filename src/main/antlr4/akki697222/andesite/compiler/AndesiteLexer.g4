@@ -56,7 +56,7 @@ CLASS: 'class';
 INTERFACE: 'interface';
 ABSTRACT: 'abstract';
 IMPLEMENTS: 'impl';
-EXTENDS: 'extend';
+EXTENDS: 'exts';
 FINAL: 'final';
 CONST: 'const';
 VAR: 'var';

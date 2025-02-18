@@ -1,10 +1,9 @@
 package akki697222.andesite.ir.nodes;
 
-import akki697222.andesite.core.type.Type;
+import akki697222.andesite.ir.type.Type;
 import akki697222.andesite.ir.AccessModifier;
 import akki697222.andesite.ir.Node;
 import akki697222.andesite.ir.Visitor;
-import akki697222.andesite.ir.nodes.expression.LiteralExpression;
 import org.jetbrains.annotations.NotNull;
 
 public class VariableDeclaration extends Node {

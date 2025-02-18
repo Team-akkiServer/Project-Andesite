@@ -1,6 +1,6 @@
-package akki697222.andesite.core.type.primitive;
+package akki697222.andesite.ir.type.primitive;
 
-import akki697222.andesite.core.type.Type;
+import akki697222.andesite.ir.type.Type;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class PrimitiveType implements Type {

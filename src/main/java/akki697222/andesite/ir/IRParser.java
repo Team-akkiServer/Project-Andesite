@@ -1,11 +1,9 @@
-package akki697222.andesite.interpreter;
+package akki697222.andesite.ir;
 
 import akki697222.andesite.compiler.AndesiteParser;
 import akki697222.andesite.compiler.AndesiteParserBaseListener;
-import akki697222.andesite.core.type.Type;
+import akki697222.andesite.ir.type.Type;
 import akki697222.andesite.exceptions.AndesiteCompileException;
-import akki697222.andesite.ir.AccessModifier;
-import akki697222.andesite.ir.Node;
 import akki697222.andesite.ir.nodes.*;
 import akki697222.andesite.ir.nodes.expression.*;
 import akki697222.andesite.ir.nodes.statements.*;
@@ -13,10 +11,10 @@ import akki697222.andesite.ir.nodes.statements.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AndesiteIRParser extends AndesiteParserBaseListener {
+public class IRParser extends AndesiteParserBaseListener {
     private final Program program;
 
-    public AndesiteIRParser() {
+    public IRParser() {
         this.program = new Program();
     }
 

@@ -48,6 +48,16 @@ public interface AndesiteParserListener extends ParseTreeListener {
 	 */
 	void exitVariableDeclaration(AndesiteParser.VariableDeclarationContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link AndesiteParser#classDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void enterClassDeclaration(AndesiteParser.ClassDeclarationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AndesiteParser#classDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void exitClassDeclaration(AndesiteParser.ClassDeclarationContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link AndesiteParser#returnStatement}.
 	 * @param ctx the parse tree
 	 */
@@ -147,6 +157,16 @@ public interface AndesiteParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitBlock(AndesiteParser.BlockContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AndesiteParser#classBlock}.
+	 * @param ctx the parse tree
+	 */
+	void enterClassBlock(AndesiteParser.ClassBlockContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AndesiteParser#classBlock}.
+	 * @param ctx the parse tree
+	 */
+	void exitClassBlock(AndesiteParser.ClassBlockContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link AndesiteParser#accessModifier}.
 	 * @param ctx the parse tree

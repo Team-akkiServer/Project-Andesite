@@ -10,9 +10,9 @@ program
 
 statements
     : functionDeclaration
+    | classDeclaration
     | variableDeclaration SEMI
     | expression SEMI
-    | variableDeclaration SEMI
     | returnStatement SEMI
     | ifStatement
     | forStatement
@@ -25,6 +25,10 @@ functionDeclaration
 
 variableDeclaration
     : accessModifier? VAR identifier COLON types variableInitializer?
+    ;
+
+classDeclaration
+    : accessModifier? CLASS identifier classBlock
     ;
 
 returnStatement
@@ -65,6 +69,14 @@ elseStatement
 
 block
     : LBRACE statements* RBRACE
+    ;
+
+classBlock
+    : LBRACE
+        ( variableDeclaration SEMI
+        | functionDeclaration
+        )*
+    RBRACE
     ;
 
 accessModifier

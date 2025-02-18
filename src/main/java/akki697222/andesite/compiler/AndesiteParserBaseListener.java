@@ -65,6 +65,18 @@ public class AndesiteParserBaseListener implements AndesiteParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterClassDeclaration(AndesiteParser.ClassDeclarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitClassDeclaration(AndesiteParser.ClassDeclarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterReturnStatement(AndesiteParser.ReturnStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -180,6 +192,18 @@ public class AndesiteParserBaseListener implements AndesiteParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitBlock(AndesiteParser.BlockContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterClassBlock(AndesiteParser.ClassBlockContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitClassBlock(AndesiteParser.ClassBlockContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

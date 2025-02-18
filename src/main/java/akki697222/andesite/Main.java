@@ -2,7 +2,7 @@ package akki697222.andesite;
 
 import akki697222.andesite.compiler.AndesiteLexer;
 import akki697222.andesite.compiler.AndesiteParser;
-import akki697222.andesite.interpreter.AndesiteInterpreter;
+import akki697222.andesite.ir.IRParser;
 import org.antlr.v4.gui.TreeViewer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
@@ -21,9 +21,9 @@ public class Main {
         try {
             CharStream charStream = CharStreams.fromFileName("test.andesite");
             showTree(charStream);
-            AndesiteInterpreter interpreter = new AndesiteInterpreter(charStream.toString());
+            //AndesiteInterpreter interpreter = new AndesiteInterpreter(charStream.toString());
             long startTime = System.currentTimeMillis();
-            interpreter.run();
+            //interpreter.run();
             long endTime = System.currentTimeMillis();
             System.out.println("実行時間: " + (endTime - startTime) + " ミリ秒");
         } catch (IOException e) {
@@ -44,5 +44,8 @@ public class Main {
                 tree
         );
         viewer.open();
+
+        IRParser irParser = new IRParser();
+
     }
 }

@@ -1,5 +1,5 @@
-var array: string[] = ["a", "b", "c", "d", "e", "f"];
-
-for (c in array) {
-    printDebug(c);
+public class Test {
+    public fn testFunction(): string {
+        return "akki";
+    }
 }

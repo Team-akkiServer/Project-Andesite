@@ -1,4 +1,4 @@
-package akki697222.andesite.core.type;
+package akki697222.andesite.ir.type;
 
 public class FunctionType implements Type {
     @Override

@@ -1,4 +1,4 @@
-package akki697222.andesite.core.type.primitive;
+package akki697222.andesite.ir.type.primitive;
 
 public class ObjectType extends PrimitiveType {
     @Override

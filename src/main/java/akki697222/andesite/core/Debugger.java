@@ -1,12 +1,12 @@
-package akki697222.andesite.interpreter;
+package akki697222.andesite.core;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class AndesiteDebugger extends JFrame {
+public class Debugger extends JFrame {
     private final JTextArea textArea;
 
-    public AndesiteDebugger() {
+    public Debugger() {
         setTitle("Andesite Debugger");
         setSize(640, 480);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
