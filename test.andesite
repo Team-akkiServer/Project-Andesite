@@ -1,3 +1,5 @@
-for (i in 0 until 1000000) {
+var array: string[] = ["a", "b", "c", "d", "e", "f"];
 
+for (c in array) {
+    printDebug(c);
 }

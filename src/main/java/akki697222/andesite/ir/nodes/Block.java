@@ -6,8 +6,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import static akki697222.andesite.interpreter.AndesiteInterpreter.logger;
-
 public class Block extends Node {
     private final List<Node> nodes;
 

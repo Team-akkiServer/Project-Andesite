@@ -35,4 +35,8 @@ public class ArrayType implements Type {
     public String toString() {
         return name();
     }
+
+    public Type getValue() {
+        return type;
+    }
 }

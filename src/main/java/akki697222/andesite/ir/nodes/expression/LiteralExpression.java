@@ -21,6 +21,7 @@ public abstract class LiteralExpression<T> extends Expression {
         if (IntegerLiteral.convert(s) != null) return IntegerLiteral.convert(s);
         if (StringLiteral.convert(s) != null) return StringLiteral.convert(s);
         if (BooleanLiteral.convert(s) != null) return BooleanLiteral.convert(s);
+        if (NullLiteral.convert(s) != null) return NullLiteral.convert(s);
         return null;
     }
 }

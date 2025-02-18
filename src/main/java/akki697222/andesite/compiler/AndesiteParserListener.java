@@ -302,6 +302,18 @@ public interface AndesiteParserListener extends ParseTreeListener {
 	 */
 	void exitBitwiseShiftExpression(AndesiteParser.BitwiseShiftExpressionContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ArrayAssignmentExpression}
+	 * labeled alternative in {@link AndesiteParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterArrayAssignmentExpression(AndesiteParser.ArrayAssignmentExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ArrayAssignmentExpression}
+	 * labeled alternative in {@link AndesiteParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitArrayAssignmentExpression(AndesiteParser.ArrayAssignmentExpressionContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code LogicalNegationExpression}
 	 * labeled alternative in {@link AndesiteParser#expression}.
 	 * @param ctx the parse tree
@@ -313,6 +325,18 @@ public interface AndesiteParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitLogicalNegationExpression(AndesiteParser.LogicalNegationExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ArrayInitializerExpression}
+	 * labeled alternative in {@link AndesiteParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterArrayInitializerExpression(AndesiteParser.ArrayInitializerExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ArrayInitializerExpression}
+	 * labeled alternative in {@link AndesiteParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitArrayInitializerExpression(AndesiteParser.ArrayInitializerExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code BitwiseAndExpression}
 	 * labeled alternative in {@link AndesiteParser#expression}.
@@ -410,6 +434,18 @@ public interface AndesiteParserListener extends ParseTreeListener {
 	 */
 	void exitNegationExpression(AndesiteParser.NegationExpressionContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ArrayAccessExpression}
+	 * labeled alternative in {@link AndesiteParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterArrayAccessExpression(AndesiteParser.ArrayAccessExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ArrayAccessExpression}
+	 * labeled alternative in {@link AndesiteParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitArrayAccessExpression(AndesiteParser.ArrayAccessExpressionContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code MultiplicativeExpression}
 	 * labeled alternative in {@link AndesiteParser#expression}.
 	 * @param ctx the parse tree
@@ -433,6 +469,36 @@ public interface AndesiteParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitBitwiseOrExpression(AndesiteParser.BitwiseOrExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AndesiteParser#arrayInitializer}.
+	 * @param ctx the parse tree
+	 */
+	void enterArrayInitializer(AndesiteParser.ArrayInitializerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AndesiteParser#arrayInitializer}.
+	 * @param ctx the parse tree
+	 */
+	void exitArrayInitializer(AndesiteParser.ArrayInitializerContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AndesiteParser#arrayItems}.
+	 * @param ctx the parse tree
+	 */
+	void enterArrayItems(AndesiteParser.ArrayItemsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AndesiteParser#arrayItems}.
+	 * @param ctx the parse tree
+	 */
+	void exitArrayItems(AndesiteParser.ArrayItemsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AndesiteParser#arrayAccess}.
+	 * @param ctx the parse tree
+	 */
+	void enterArrayAccess(AndesiteParser.ArrayAccessContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AndesiteParser#arrayAccess}.
+	 * @param ctx the parse tree
+	 */
+	void exitArrayAccess(AndesiteParser.ArrayAccessContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code LiteralExpression}
 	 * labeled alternative in {@link AndesiteParser#primary}.
@@ -492,15 +558,29 @@ public interface AndesiteParserListener extends ParseTreeListener {
 	 */
 	void exitMethodInvoke(AndesiteParser.MethodInvokeContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link AndesiteParser#types}.
+	 * Enter a parse tree produced by the {@code NormalType}
+	 * labeled alternative in {@link AndesiteParser#types}.
 	 * @param ctx the parse tree
 	 */
-	void enterTypes(AndesiteParser.TypesContext ctx);
+	void enterNormalType(AndesiteParser.NormalTypeContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link AndesiteParser#types}.
+	 * Exit a parse tree produced by the {@code NormalType}
+	 * labeled alternative in {@link AndesiteParser#types}.
 	 * @param ctx the parse tree
 	 */
-	void exitTypes(AndesiteParser.TypesContext ctx);
+	void exitNormalType(AndesiteParser.NormalTypeContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ArrayType}
+	 * labeled alternative in {@link AndesiteParser#types}.
+	 * @param ctx the parse tree
+	 */
+	void enterArrayType(AndesiteParser.ArrayTypeContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ArrayType}
+	 * labeled alternative in {@link AndesiteParser#types}.
+	 * @param ctx the parse tree
+	 */
+	void exitArrayType(AndesiteParser.ArrayTypeContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link AndesiteParser#baseTypes}.
 	 * @param ctx the parse tree
@@ -511,16 +591,6 @@ public interface AndesiteParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitBaseTypes(AndesiteParser.BaseTypesContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link AndesiteParser#array}.
-	 * @param ctx the parse tree
-	 */
-	void enterArray(AndesiteParser.ArrayContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link AndesiteParser#array}.
-	 * @param ctx the parse tree
-	 */
-	void exitArray(AndesiteParser.ArrayContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link AndesiteParser#primitive}.
 	 * @param ctx the parse tree
@@ -542,15 +612,53 @@ public interface AndesiteParserListener extends ParseTreeListener {
 	 */
 	void exitIdentifier(AndesiteParser.IdentifierContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link AndesiteParser#literal}.
+	 * Enter a parse tree produced by the {@code NumberLiteral}
+	 * labeled alternative in {@link AndesiteParser#literal}.
 	 * @param ctx the parse tree
 	 */
-	void enterLiteral(AndesiteParser.LiteralContext ctx);
+	void enterNumberLiteral(AndesiteParser.NumberLiteralContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link AndesiteParser#literal}.
+	 * Exit a parse tree produced by the {@code NumberLiteral}
+	 * labeled alternative in {@link AndesiteParser#literal}.
 	 * @param ctx the parse tree
 	 */
-	void exitLiteral(AndesiteParser.LiteralContext ctx);
+	void exitNumberLiteral(AndesiteParser.NumberLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code StringLiteral}
+	 * labeled alternative in {@link AndesiteParser#literal}.
+	 * @param ctx the parse tree
+	 */
+	void enterStringLiteral(AndesiteParser.StringLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code StringLiteral}
+	 * labeled alternative in {@link AndesiteParser#literal}.
+	 * @param ctx the parse tree
+	 */
+	void exitStringLiteral(AndesiteParser.StringLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code BooleanLiteral}
+	 * labeled alternative in {@link AndesiteParser#literal}.
+	 * @param ctx the parse tree
+	 */
+	void enterBooleanLiteral(AndesiteParser.BooleanLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BooleanLiteral}
+	 * labeled alternative in {@link AndesiteParser#literal}.
+	 * @param ctx the parse tree
+	 */
+	void exitBooleanLiteral(AndesiteParser.BooleanLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code NullLiteral}
+	 * labeled alternative in {@link AndesiteParser#literal}.
+	 * @param ctx the parse tree
+	 */
+	void enterNullLiteral(AndesiteParser.NullLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code NullLiteral}
+	 * labeled alternative in {@link AndesiteParser#literal}.
+	 * @param ctx the parse tree
+	 */
+	void exitNullLiteral(AndesiteParser.NullLiteralContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link AndesiteParser#string}.
 	 * @param ctx the parse tree

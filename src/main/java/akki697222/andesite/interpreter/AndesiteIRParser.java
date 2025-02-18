@@ -89,43 +89,47 @@ public class AndesiteIRParser extends AndesiteParserBaseListener {
                     }
                     return new MethodInvokeExpression(ctx_.methodInvoke().identifier().getText(), argumentList);
                 } else if (ctx.primary() instanceof AndesiteParser.ParenthesizedExpressionContext ctx_) {
-
+                    return new ParenthesizedExpression(toExpression(ctx_.expression()));
                 }
             }
             case AndesiteParser.LogicalNegationExpressionContext ctx -> {
                 return new LogicalNegationExpression(toExpression(ctx.expression()));
             }
             case AndesiteParser.MultiplicativeExpressionContext ctx -> {
-                Expression left = toExpression(ctx.expression());
-                Expression right = toExpression(ctx.rightExpression().expression());
-                Operation op = Operation.get(ctx.op.getText());
-                return new BinaryOperationExpression(left, right, op);
+                return createBinaryOperationExpression(ctx.expression(), ctx.rightExpression().expression(), Operation.get(ctx.op.getText()));
             }
             case AndesiteParser.AdditiveExpressionContext ctx -> {
-                Expression left = toExpression(ctx.expression());
-                Expression right = toExpression(ctx.rightExpression().expression());
-                Operation op = Operation.get(ctx.op.getText());
-                return new BinaryOperationExpression(left, right, op);
+                return createBinaryOperationExpression(ctx.expression(), ctx.rightExpression().expression(), Operation.get(ctx.op.getText()));
             }
             case AndesiteParser.RelationalExpressionContext ctx -> {
-                Expression left = toExpression(ctx.expression());
-                Expression right = toExpression(ctx.rightExpression().expression());
-                Operation op = Operation.get(ctx.op.getText());
-                return new BinaryOperationExpression(left, right, op);
+                return createBinaryOperationExpression(ctx.expression(), ctx.rightExpression().expression(), Operation.get(ctx.op.getText()));
             }
             case AndesiteParser.EqualityExpressionContext ctx -> {
-                Expression left = toExpression(ctx.expression());
-                Expression right = toExpression(ctx.rightExpression().expression());
-                Operation op = Operation.get(ctx.op.getText());
-                return new BinaryOperationExpression(left, right, op);
+                return createBinaryOperationExpression(ctx.expression(), ctx.rightExpression().expression(), Operation.get(ctx.op.getText()));
             }
             case AndesiteParser.AssignmentExpressionContext ctx -> {
                 return new AssignmentExpression(new IdentifierExpression(ctx.identifier().getText()), toExpression(ctx.expression()));
+            }
+            case AndesiteParser.ArrayInitializerExpressionContext ctx -> {
+                return new ArrayInitializerExpression(ctx.arrayInitializer().arrayItems() != null ? ctx.arrayInitializer().arrayItems().expression().stream().map(this::toExpression).toList() : new ArrayList<>());
+            }
+            case AndesiteParser.ArrayAssignmentExpressionContext ctx -> {
+                AndesiteParser.ArrayAccessContext arrayAccess = ctx.arrayAccess();
+                return new ArrayAssignmentExpression(new IdentifierExpression(arrayAccess.identifier().getText()), IntegerLiteral.convert(arrayAccess.expression().getText()), toExpression(ctx.expression()));
+            }
+            case AndesiteParser.ArrayAccessExpressionContext ctx -> {
+                return new ArrayAccessExpression(toExpression(ctx.arrayAccess().expression()), new IdentifierExpression(ctx.arrayAccess().identifier().getText()));
             }
             case null, default -> {
             }
         }
         return null;
+    }
+
+    private Expression createBinaryOperationExpression(AndesiteParser.ExpressionContext leftContext, AndesiteParser.ExpressionContext rightContext, Operation operation) {
+        Expression left = toExpression(leftContext);
+        Expression right = toExpression(rightContext);
+        return new BinaryOperationExpression(left, right, operation);
     }
 
     public FunctionDeclaration asFunction(AndesiteParser.StatementsContext statementsContext) {
@@ -154,14 +158,17 @@ public class AndesiteIRParser extends AndesiteParserBaseListener {
     public VariableDeclaration asVariable(AndesiteParser.StatementsContext statementsContext) {
         if (statementsContext.getChild(0) instanceof AndesiteParser.VariableDeclarationContext variableDeclarationContext) {
             AccessModifier accessModifier = AccessModifier.PRIVATE;
-            VariableInitializer initializeWith;
+            VariableInitializer initializeWith = null;
             if (variableDeclarationContext.accessModifier() != null) {
                 AccessModifier.valueOf(variableDeclarationContext.accessModifier().getText().toUpperCase());
             }
             if (variableDeclarationContext.variableInitializer() != null) {
-                initializeWith = new VariableInitializer(LiteralExpression.valueOf(variableDeclarationContext.variableInitializer().expression().getText()));
-                if (initializeWith.getExpression() == null) {
-                    initializeWith = new VariableInitializer(toExpression(variableDeclarationContext.variableInitializer().expression()));
+                AndesiteParser.ExpressionContext expressionContext = variableDeclarationContext.variableInitializer().expression();
+                if (expressionContext != null) {
+                    initializeWith = new VariableInitializer(toExpression(expressionContext));
+                    if (initializeWith.getExpression() == null) {
+                        initializeWith = new VariableInitializer(toExpression(variableDeclarationContext.variableInitializer().expression()));
+                    }
                 }
             } else {
                 initializeWith = VariableInitializer.EMPTY;

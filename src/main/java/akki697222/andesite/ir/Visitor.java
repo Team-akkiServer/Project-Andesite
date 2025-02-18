@@ -16,4 +16,5 @@ public interface Visitor {
     void visit(IfStatement ifStatement);
     void visit(ForStatement forStatement);
     void visit(WhileStatement whileStatement);
+    void visit(ArrayAssignmentExpression arrayAssignmentExpression);
 }

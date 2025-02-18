@@ -113,8 +113,23 @@ expression
     | expression op=L_AND rightExpression             # LogicalAndExpression
     | expression op=L_OR rightExpression              # LogicalOrExpression
     | expression op=L_XOR rightExpression             # LogicalXorExpression
-    | identifier ASSIGN expression               # AssignmentExpression
+    | identifier ASSIGN expression                    # AssignmentExpression
+    | arrayAccess ASSIGN expression                   # ArrayAssignmentExpression
     | identifier op=(ADD_ASSIGN | SUB_ASSIGN | MUL_ASSIGN | DIV_ASSIGN | MOD_ASSIGN) expression # CompoundAssignmentExpression
+    | arrayAccess                                     #ArrayAccessExpression
+    | arrayInitializer                                #ArrayInitializerExpression
+    ;
+
+arrayInitializer
+    : LBRACKET arrayItems? RBRACKET
+    ;
+
+arrayItems
+    : expression (COMMA expression)*
+    ;
+
+arrayAccess
+    : identifier LBRACKET expression RBRACKET
     ;
 
 primary
@@ -129,19 +144,14 @@ methodInvoke
     ;
 
 types
-    : baseTypes
-    | array
+    : baseTypes #NormalType
+    | baseTypes LBRACKET RBRACKET #ArrayType
     ;
 
 baseTypes
     : primitive
     | identifier
     ;
-
-array
-    : baseTypes LBRACKET RBRACKET
-    ;
-
 primitive
     : STRING
     | INTEGER
@@ -159,10 +169,10 @@ identifier
     ;
 
 literal
-    : number
-    | string
-    | boolean
-    | NULL
+    : number #NumberLiteral
+    | string #StringLiteral
+    | boolean #BooleanLiteral
+    | NULL #NullLiteral
     ;
 
 string

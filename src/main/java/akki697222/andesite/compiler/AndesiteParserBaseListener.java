@@ -353,6 +353,18 @@ public class AndesiteParserBaseListener implements AndesiteParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterArrayAssignmentExpression(AndesiteParser.ArrayAssignmentExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitArrayAssignmentExpression(AndesiteParser.ArrayAssignmentExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterLogicalNegationExpression(AndesiteParser.LogicalNegationExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -360,6 +372,18 @@ public class AndesiteParserBaseListener implements AndesiteParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitLogicalNegationExpression(AndesiteParser.LogicalNegationExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterArrayInitializerExpression(AndesiteParser.ArrayInitializerExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitArrayInitializerExpression(AndesiteParser.ArrayInitializerExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -461,6 +485,18 @@ public class AndesiteParserBaseListener implements AndesiteParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterArrayAccessExpression(AndesiteParser.ArrayAccessExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitArrayAccessExpression(AndesiteParser.ArrayAccessExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterMultiplicativeExpression(AndesiteParser.MultiplicativeExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -480,6 +516,42 @@ public class AndesiteParserBaseListener implements AndesiteParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitBitwiseOrExpression(AndesiteParser.BitwiseOrExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterArrayInitializer(AndesiteParser.ArrayInitializerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitArrayInitializer(AndesiteParser.ArrayInitializerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterArrayItems(AndesiteParser.ArrayItemsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitArrayItems(AndesiteParser.ArrayItemsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterArrayAccess(AndesiteParser.ArrayAccessContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitArrayAccess(AndesiteParser.ArrayAccessContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -545,13 +617,25 @@ public class AndesiteParserBaseListener implements AndesiteParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTypes(AndesiteParser.TypesContext ctx) { }
+	@Override public void enterNormalType(AndesiteParser.NormalTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTypes(AndesiteParser.TypesContext ctx) { }
+	@Override public void exitNormalType(AndesiteParser.NormalTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterArrayType(AndesiteParser.ArrayTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitArrayType(AndesiteParser.ArrayTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -564,18 +648,6 @@ public class AndesiteParserBaseListener implements AndesiteParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitBaseTypes(AndesiteParser.BaseTypesContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterArray(AndesiteParser.ArrayContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitArray(AndesiteParser.ArrayContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -605,13 +677,49 @@ public class AndesiteParserBaseListener implements AndesiteParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLiteral(AndesiteParser.LiteralContext ctx) { }
+	@Override public void enterNumberLiteral(AndesiteParser.NumberLiteralContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLiteral(AndesiteParser.LiteralContext ctx) { }
+	@Override public void exitNumberLiteral(AndesiteParser.NumberLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStringLiteral(AndesiteParser.StringLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStringLiteral(AndesiteParser.StringLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBooleanLiteral(AndesiteParser.BooleanLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBooleanLiteral(AndesiteParser.BooleanLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNullLiteral(AndesiteParser.NullLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNullLiteral(AndesiteParser.NullLiteralContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
