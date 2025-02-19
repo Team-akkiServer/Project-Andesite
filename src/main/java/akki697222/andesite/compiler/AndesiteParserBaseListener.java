@@ -53,6 +53,18 @@ public class AndesiteParserBaseListener implements AndesiteParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterFunctionModifier(AndesiteParser.FunctionModifierContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFunctionModifier(AndesiteParser.FunctionModifierContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterVariableDeclaration(AndesiteParser.VariableDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -72,6 +84,42 @@ public class AndesiteParserBaseListener implements AndesiteParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitClassDeclaration(AndesiteParser.ClassDeclarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterObjectiveExtends(AndesiteParser.ObjectiveExtendsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitObjectiveExtends(AndesiteParser.ObjectiveExtendsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterObjectiveImplements(AndesiteParser.ObjectiveImplementsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitObjectiveImplements(AndesiteParser.ObjectiveImplementsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterInterfacesDeclaration(AndesiteParser.InterfacesDeclarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitInterfacesDeclaration(AndesiteParser.InterfacesDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -204,6 +252,18 @@ public class AndesiteParserBaseListener implements AndesiteParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitClassBlock(AndesiteParser.ClassBlockContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterConstructorDeclaration(AndesiteParser.ConstructorDeclarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitConstructorDeclaration(AndesiteParser.ConstructorDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -605,6 +665,54 @@ public class AndesiteParserBaseListener implements AndesiteParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterSelfAccessExpression(AndesiteParser.SelfAccessExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSelfAccessExpression(AndesiteParser.SelfAccessExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSelfInvokeExpression(AndesiteParser.SelfInvokeExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSelfInvokeExpression(AndesiteParser.SelfInvokeExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSelfAssignmentExpression(AndesiteParser.SelfAssignmentExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSelfAssignmentExpression(AndesiteParser.SelfAssignmentExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSelfChainedAssignmentExpression(AndesiteParser.SelfChainedAssignmentExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSelfChainedAssignmentExpression(AndesiteParser.SelfChainedAssignmentExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterMethodInvokeExpression(AndesiteParser.MethodInvokeExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -617,6 +725,18 @@ public class AndesiteParserBaseListener implements AndesiteParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterMethodChainInvokeExpression(AndesiteParser.MethodChainInvokeExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMethodChainInvokeExpression(AndesiteParser.MethodChainInvokeExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterParenthesizedExpression(AndesiteParser.ParenthesizedExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -624,6 +744,54 @@ public class AndesiteParserBaseListener implements AndesiteParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitParenthesizedExpression(AndesiteParser.ParenthesizedExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterInstantiateExpression(AndesiteParser.InstantiateExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitInstantiateExpression(AndesiteParser.InstantiateExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMethodChain(AndesiteParser.MethodChainContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMethodChain(AndesiteParser.MethodChainContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIdentifierChain(AndesiteParser.IdentifierChainContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIdentifierChain(AndesiteParser.IdentifierChainContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDefaultIdentifierChain(AndesiteParser.DefaultIdentifierChainContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDefaultIdentifierChain(AndesiteParser.DefaultIdentifierChainContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

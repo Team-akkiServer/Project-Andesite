@@ -1,5 +1,18 @@
-public class Test {
-    public fn testFunction(): string {
+public class Test impl ITest {
+    final var value: string;
+
+    constructor(value: string) {
+        self.value = value;
+    }
+
+    public override fn testFunction(): string {
         return "akki";
     }
 }
+
+
+public interface ITest {
+    fn testFunction(): string;
+}
+
+ITest.testFunction();

@@ -11,6 +11,7 @@ program
 statements
     : functionDeclaration
     | classDeclaration
+    | interfacesDeclaration
     | variableDeclaration SEMI
     | expression SEMI
     | returnStatement SEMI
@@ -20,15 +21,35 @@ statements
     ;
 
 functionDeclaration
-    : accessModifier? FUNCTION identifier LPAREN parameterList? RPAREN COLON types block
+    : accessModifier? functionModifier? FUNCTION identifier LPAREN parameterList? RPAREN COLON types block
+    | accessModifier? functionModifier? FUNCTION identifier LPAREN parameterList? RPAREN COLON types SEMI
+    ;
+
+functionModifier
+    : ABSTRACT
+    | OVERRIDE
+    | STATIC
+    | FINAL
     ;
 
 variableDeclaration
-    : accessModifier? VAR identifier COLON types variableInitializer?
+    : accessModifier? STATIC? FINAL? VAR identifier COLON types variableInitializer?
     ;
 
 classDeclaration
-    : accessModifier? CLASS identifier classBlock
+    : accessModifier? STATIC? ABSTRACT? CLASS identifier objectiveExtends? objectiveImplements? classBlock
+    ;
+
+objectiveExtends
+    : EXTENDS identifier
+    ;
+
+objectiveImplements
+    : IMPLEMENTS identifier (COMMA identifier)*
+    ;
+
+interfacesDeclaration
+    : accessModifier? STATIC? INTERFACE identifier objectiveExtends? classBlock
     ;
 
 returnStatement
@@ -74,9 +95,16 @@ block
 classBlock
     : LBRACE
         ( variableDeclaration SEMI
+        | constructorDeclaration
         | functionDeclaration
+        | classDeclaration
+        | interfacesDeclaration
         )*
     RBRACE
+    ;
+
+constructorDeclaration
+    : CONSTRUCTOR LPAREN parameterList? RPAREN block
     ;
 
 accessModifier
@@ -147,8 +175,26 @@ arrayAccess
 primary
     : literal                                     # LiteralExpression
     | identifier                                  # IdentifierExpression
+    | SELF DOT defaultIdentifierChain                      # SelfAccessExpression
+    | SELF DOT (methodInvoke | methodChain)           # SelfInvokeExpression
+    | SELF DOT identifier ASSIGN expression       # SelfAssignmentExpression
+    | SELF DOT identifierChain ASSIGN expression  # SelfChainedAssignmentExpression
     | methodInvoke                                # MethodInvokeExpression
+    | methodChain                                 # MethodChainInvokeExpression
     | LPAREN expression RPAREN                    # ParenthesizedExpression
+    | NEW identifier LPAREN argumentList? RPAREN  # InstantiateExpression
+    ;
+
+methodChain
+    : identifierChain DOT methodInvoke
+    ;
+
+identifierChain
+    : identifier (DOT identifier)+
+    ;
+
+defaultIdentifierChain
+    : identifier (DOT identifier)*
     ;
 
 methodInvoke

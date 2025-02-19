@@ -12,13 +12,17 @@ public class FunctionDeclaration extends Node {
     private final Type returnType;
     private final FunctionParameters parameters;
     private final Block block;
+    private final boolean isAbstract;
+    private final boolean isStatic;
 
-    public FunctionDeclaration(@NotNull String name, @NotNull AccessModifier accessModifier, @NotNull Type returnType, @NotNull FunctionParameters parameters, @NotNull Block block) {
+    public FunctionDeclaration(@NotNull String name, @NotNull AccessModifier accessModifier, @NotNull Type returnType, @NotNull FunctionParameters parameters, @NotNull Block block, boolean isAbstract, boolean isStatic) {
         this.name = name;
         this.accessModifier = accessModifier;
         this.returnType = returnType;
         this.parameters = parameters;
         this.block = block;
+        this.isAbstract = isAbstract;
+        this.isStatic = isStatic;
         parameters.setParent(this);
     }
 
@@ -56,5 +60,13 @@ public class FunctionDeclaration extends Node {
     @Override
     public void accept(@NotNull Visitor visitor) {
         visitor.visit(this);
+    }
+
+    public boolean isAbstract() {
+        return isAbstract;
+    }
+
+    public boolean isStatic() {
+        return isStatic;
     }
 }
