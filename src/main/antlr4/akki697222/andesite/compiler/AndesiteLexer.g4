@@ -53,6 +53,8 @@ BREAK: 'break';
 SWITCH: 'switch';
 CASE: 'case';
 SELF: 'self';
+SUPER: 'super';
+ANY: 'any';
 DEFAULT: 'default';
 CAST: 'cast';
 CLASS: 'class';

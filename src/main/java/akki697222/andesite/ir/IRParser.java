@@ -3,7 +3,6 @@ package akki697222.andesite.ir;
 import akki697222.andesite.compiler.AndesiteParser;
 import akki697222.andesite.compiler.AndesiteParserBaseListener;
 import akki697222.andesite.exceptions.CompileException;
-import akki697222.andesite.ir.type.Type;
 import akki697222.andesite.ir.nodes.*;
 import akki697222.andesite.ir.nodes.expression.*;
 import akki697222.andesite.ir.nodes.statements.*;
@@ -154,7 +153,7 @@ public class IRParser extends AndesiteParserBaseListener {
             IdentifierExpression classExtends = null;
             List<IdentifierExpression> classImplements = new ArrayList<>();
             if (classDeclarationContext.objectiveExtends() != null) {
-                classExtends = new IdentifierExpression(classDeclarationContext.objectiveExtends().identifier().getText());
+                classExtends = new IdentifierExpression(classDeclarationContext.objectiveExtends().types().getText());
             }
             if (classDeclarationContext.objectiveImplements() != null) {
                 classImplements = classDeclarationContext.objectiveImplements().identifier().stream().map(identifierContext -> new IdentifierExpression(identifierContext.getText())).toList();

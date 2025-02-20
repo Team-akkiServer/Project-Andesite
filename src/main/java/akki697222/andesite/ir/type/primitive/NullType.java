@@ -1,8 +1,0 @@
-package akki697222.andesite.ir.type.primitive;
-
-public class NullType extends PrimitiveType {
-    @Override
-    public String name() {
-        return "null";
-    }
-}

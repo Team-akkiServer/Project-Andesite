@@ -24,8 +24,7 @@ statements
     ;
 
 functionDeclaration
-    : accessModifier? functionModifier* FUNCTION identifier LPAREN parameterList? RPAREN COLON types block
-    | accessModifier? functionModifier* FUNCTION identifier LPAREN parameterList? RPAREN COLON types SEMI
+    : accessModifier? functionModifier* FUNCTION typeArgumentList? identifier LPAREN parameterList? RPAREN COLON types (block | SEMI)
     ;
 
 nativeFunctionDeclaration
@@ -52,19 +51,23 @@ variableDeclaration
     ;
 
 classDeclaration
-    : accessModifier? modifier* CLASS identifier objectiveExtends? objectiveImplements? classBlock
+    : accessModifier? modifier* CLASS identifier typeArgumentList? objectiveExtends? objectiveImplements? classBlock
     ;
 
 objectiveExtends
-    : EXTENDS identifier
+    : EXTENDS types
     ;
 
 objectiveImplements
-    : IMPLEMENTS identifier (COMMA identifier)*
+    : IMPLEMENTS types (COMMA types)*
     ;
 
 interfacesDeclaration
-    : accessModifier? modifier* INTERFACE identifier objectiveExtends? classBlock
+    : accessModifier? modifier* INTERFACE identifier typeArgumentList? interfaceExtends? classBlock
+    ;
+
+interfaceExtends
+    : EXTENDS types (COMMA types)*
     ;
 
 returnStatement
@@ -218,10 +221,31 @@ types
     | baseTypes LBRACKET RBRACKET #ArrayType
     ;
 
-baseTypes
-    : primitive
-    | identifier
+typeParameterBound
+    : EXTENDS types
+    | SUPER types
     ;
+
+typeArgument
+    : identifier typeParameterBound? # IdentifierTypeParameter
+    | wildcard typeParameterBound? #WildCardedTypeParameter
+    ;
+
+wildcard
+    : ANY
+    | QUESTION
+    ;
+
+typeArgumentList
+    : LT typeArgument (COMMA typeArgument)* GT
+    ;
+
+baseTypes
+    : primitive #PrimitiveType
+    | identifier #CustomType
+    | identifier typeArgumentList #TypeParameterType
+    ;
+
 primitive
     : STRING
     | INTEGER

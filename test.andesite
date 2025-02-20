@@ -30,3 +30,13 @@ test().test();
 repeat {
 
 } until (testFunction() == "akki");
+
+public interface TypeParameterTest<T> {
+    fn getT(): T;
+}
+
+public class TypeParameterTestImpl impl TypeParameterTest<int> {
+    public override fn getT: int {
+        return 0;
+    }
+}

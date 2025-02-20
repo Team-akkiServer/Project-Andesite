@@ -128,6 +128,16 @@ public interface AndesiteParserListener extends ParseTreeListener {
 	 */
 	void exitInterfacesDeclaration(AndesiteParser.InterfacesDeclarationContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link AndesiteParser#interfaceExtends}.
+	 * @param ctx the parse tree
+	 */
+	void enterInterfaceExtends(AndesiteParser.InterfaceExtendsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AndesiteParser#interfaceExtends}.
+	 * @param ctx the parse tree
+	 */
+	void exitInterfaceExtends(AndesiteParser.InterfaceExtendsContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link AndesiteParser#returnStatement}.
 	 * @param ctx the parse tree
 	 */
@@ -750,15 +760,91 @@ public interface AndesiteParserListener extends ParseTreeListener {
 	 */
 	void exitArrayType(AndesiteParser.ArrayTypeContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link AndesiteParser#baseTypes}.
+	 * Enter a parse tree produced by {@link AndesiteParser#typeParameter}.
 	 * @param ctx the parse tree
 	 */
-	void enterBaseTypes(AndesiteParser.BaseTypesContext ctx);
+	void enterTypeParameter(AndesiteParser.TypeParameterContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link AndesiteParser#baseTypes}.
+	 * Exit a parse tree produced by {@link AndesiteParser#typeParameter}.
 	 * @param ctx the parse tree
 	 */
-	void exitBaseTypes(AndesiteParser.BaseTypesContext ctx);
+	void exitTypeParameter(AndesiteParser.TypeParameterContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AndesiteParser#typeParameterBound}.
+	 * @param ctx the parse tree
+	 */
+	void enterTypeParameterBound(AndesiteParser.TypeParameterBoundContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AndesiteParser#typeParameterBound}.
+	 * @param ctx the parse tree
+	 */
+	void exitTypeParameterBound(AndesiteParser.TypeParameterBoundContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AndesiteParser#typeArgument}.
+	 * @param ctx the parse tree
+	 */
+	void enterTypeArgument(AndesiteParser.TypeArgumentContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AndesiteParser#typeArgument}.
+	 * @param ctx the parse tree
+	 */
+	void exitTypeArgument(AndesiteParser.TypeArgumentContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AndesiteParser#wildcardType}.
+	 * @param ctx the parse tree
+	 */
+	void enterWildcardType(AndesiteParser.WildcardTypeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AndesiteParser#wildcardType}.
+	 * @param ctx the parse tree
+	 */
+	void exitWildcardType(AndesiteParser.WildcardTypeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AndesiteParser#typeArgumentList}.
+	 * @param ctx the parse tree
+	 */
+	void enterTypeArgumentList(AndesiteParser.TypeArgumentListContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AndesiteParser#typeArgumentList}.
+	 * @param ctx the parse tree
+	 */
+	void exitTypeArgumentList(AndesiteParser.TypeArgumentListContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code PrimitiveType}
+	 * labeled alternative in {@link AndesiteParser#baseTypes}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrimitiveType(AndesiteParser.PrimitiveTypeContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code PrimitiveType}
+	 * labeled alternative in {@link AndesiteParser#baseTypes}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrimitiveType(AndesiteParser.PrimitiveTypeContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code CustomType}
+	 * labeled alternative in {@link AndesiteParser#baseTypes}.
+	 * @param ctx the parse tree
+	 */
+	void enterCustomType(AndesiteParser.CustomTypeContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code CustomType}
+	 * labeled alternative in {@link AndesiteParser#baseTypes}.
+	 * @param ctx the parse tree
+	 */
+	void exitCustomType(AndesiteParser.CustomTypeContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code TypeParameterType}
+	 * labeled alternative in {@link AndesiteParser#baseTypes}.
+	 * @param ctx the parse tree
+	 */
+	void enterTypeParameterType(AndesiteParser.TypeParameterTypeContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code TypeParameterType}
+	 * labeled alternative in {@link AndesiteParser#baseTypes}.
+	 * @param ctx the parse tree
+	 */
+	void exitTypeParameterType(AndesiteParser.TypeParameterTypeContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link AndesiteParser#primitive}.
 	 * @param ctx the parse tree
