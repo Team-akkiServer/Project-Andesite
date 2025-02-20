@@ -12,17 +12,15 @@ public class FunctionDeclaration extends Node {
     private final Type returnType;
     private final FunctionParameters parameters;
     private final Block block;
-    private final boolean isAbstract;
-    private final boolean isStatic;
+    private final FunctionModifier functionModifier;
 
-    public FunctionDeclaration(@NotNull String name, @NotNull AccessModifier accessModifier, @NotNull Type returnType, @NotNull FunctionParameters parameters, @NotNull Block block, boolean isAbstract, boolean isStatic) {
+    public FunctionDeclaration(@NotNull String name, @NotNull AccessModifier accessModifier, @NotNull Type returnType, @NotNull FunctionParameters parameters, @NotNull Block block, FunctionModifier functionModifier) {
         this.name = name;
         this.accessModifier = accessModifier;
         this.returnType = returnType;
         this.parameters = parameters;
         this.block = block;
-        this.isAbstract = isAbstract;
-        this.isStatic = isStatic;
+        this.functionModifier = functionModifier;
         parameters.setParent(this);
     }
 
@@ -53,7 +51,8 @@ public class FunctionDeclaration extends Node {
                 ", accessModifier=" + accessModifier +
                 ", returnType=" + returnType +
                 ", parameters=" + parameters +
-                ", methodBlock=" + block +
+                ", block=" + block +
+                ", functionModifier=" + functionModifier +
                 '}';
     }
 
@@ -62,11 +61,7 @@ public class FunctionDeclaration extends Node {
         visitor.visit(this);
     }
 
-    public boolean isAbstract() {
-        return isAbstract;
-    }
-
-    public boolean isStatic() {
-        return isStatic;
+    public FunctionModifier getFunctionModifier() {
+        return functionModifier;
     }
 }

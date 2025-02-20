@@ -3,24 +3,27 @@ package akki697222.andesite.ir.nodes;
 import akki697222.andesite.ir.AccessModifier;
 import akki697222.andesite.ir.Node;
 import akki697222.andesite.ir.nodes.expression.IdentifierExpression;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class ClassDeclaration extends Node {
     private final ClassBlock classBlock;
     private final String name;
-    private final boolean isAbstract;
+    private final Modifier modifier;
     private final IdentifierExpression classExtends;
     private final List<IdentifierExpression> interfacesImplements;
     private final AccessModifier accessModifier;
+    private final @Nullable ClassConstructor constructor;
 
-    public ClassDeclaration(ClassBlock classBlock, String name, boolean isAbstract, IdentifierExpression classExtends, List<IdentifierExpression> interfacesImplements, AccessModifier accessModifier) {
+    public ClassDeclaration(ClassBlock classBlock, String name, Modifier modifier, IdentifierExpression classExtends, List<IdentifierExpression> interfacesImplements, AccessModifier accessModifier, @Nullable ClassConstructor constructor) {
         this.classBlock = classBlock;
         this.name = name;
-        this.isAbstract = isAbstract;
+        this.modifier = modifier;
         this.classExtends = classExtends;
         this.interfacesImplements = interfacesImplements;
         this.accessModifier = accessModifier;
+        this.constructor = constructor;
     }
 
     public List<IdentifierExpression> getInterfacesImplements() {
@@ -31,8 +34,8 @@ public class ClassDeclaration extends Node {
         return classExtends;
     }
 
-    public boolean isAbstract() {
-        return isAbstract;
+    public Modifier getModifier() {
+        return modifier;
     }
 
     public String getName() {
@@ -52,10 +55,15 @@ public class ClassDeclaration extends Node {
         return "ClassDeclaration{" +
                 "classBlock=" + classBlock +
                 ", name='" + name + '\'' +
-                ", isAbstract=" + isAbstract +
+                ", modifier=" + modifier +
                 ", classExtends=" + classExtends +
                 ", interfacesImplements=" + interfacesImplements +
                 ", accessModifier=" + accessModifier +
+                ", constructor=" + constructor +
                 '}';
+    }
+
+    public @Nullable ClassConstructor getConstructor() {
+        return constructor;
     }
 }

@@ -9,35 +9,50 @@ program
     ;
 
 statements
-    : functionDeclaration
+    : nativeFunctionDeclaration
+    | functionDeclaration
     | classDeclaration
     | interfacesDeclaration
     | variableDeclaration SEMI
+    | constantDeclaration SEMI
     | expression SEMI
     | returnStatement SEMI
     | ifStatement
     | forStatement
     | whileStatement
+    | repeatStatement SEMI
     ;
 
 functionDeclaration
-    : accessModifier? functionModifier? FUNCTION identifier LPAREN parameterList? RPAREN COLON types block
-    | accessModifier? functionModifier? FUNCTION identifier LPAREN parameterList? RPAREN COLON types SEMI
+    : accessModifier? functionModifier* FUNCTION identifier LPAREN parameterList? RPAREN COLON types block
+    | accessModifier? functionModifier* FUNCTION identifier LPAREN parameterList? RPAREN COLON types SEMI
+    ;
+
+nativeFunctionDeclaration
+    : accessModifier? modifier* NATIVE FUNCTION identifier LPAREN parameterList RPAREN COLON types SEMI
+    ;
+
+constantDeclaration
+    : accessModifier? CONST identifier COLON types ASSIGN expression
     ;
 
 functionModifier
-    : ABSTRACT
-    | OVERRIDE
+    : OVERRIDE
+    | modifier
+    ;
+
+modifier
+    : FINAL
     | STATIC
-    | FINAL
+    | ABSTRACT
     ;
 
 variableDeclaration
-    : accessModifier? STATIC? FINAL? VAR identifier COLON types variableInitializer?
+    : accessModifier? modifier* VAR identifier COLON types variableInitializer?
     ;
 
 classDeclaration
-    : accessModifier? STATIC? ABSTRACT? CLASS identifier objectiveExtends? objectiveImplements? classBlock
+    : accessModifier? modifier* CLASS identifier objectiveExtends? objectiveImplements? classBlock
     ;
 
 objectiveExtends
@@ -49,7 +64,7 @@ objectiveImplements
     ;
 
 interfacesDeclaration
-    : accessModifier? STATIC? INTERFACE identifier objectiveExtends? classBlock
+    : accessModifier? modifier* INTERFACE identifier objectiveExtends? classBlock
     ;
 
 returnStatement
@@ -95,10 +110,10 @@ block
 classBlock
     : LBRACE
         ( variableDeclaration SEMI
-        | constructorDeclaration
         | functionDeclaration
         | classDeclaration
         | interfacesDeclaration
+        | constructorDeclaration
         )*
     RBRACE
     ;
@@ -153,10 +168,10 @@ expression
     | expression op=L_AND rightExpression             # LogicalAndExpression
     | expression op=L_OR rightExpression              # LogicalOrExpression
     | expression op=L_XOR rightExpression             # LogicalXorExpression
-    | identifier ASSIGN expression                    # AssignmentExpression
-    | arrayAccess ASSIGN expression                   # ArrayAssignmentExpression
+    | chainReference ASSIGN expression                # AssignmentExpression
+    | SELF DOT chainReference                                  # SelfReferenceExpression
+    | SELF DOT chainReference ASSIGN expression                # SelfAssignmentExpression
     | identifier op=(ADD_ASSIGN | SUB_ASSIGN | MUL_ASSIGN | DIV_ASSIGN | MOD_ASSIGN) expression # CompoundAssignmentExpression
-    | arrayAccess                                     #ArrayAccessExpression
     | arrayInitializer                                #ArrayInitializerExpression
     ;
 
@@ -174,27 +189,24 @@ arrayAccess
 
 primary
     : literal                                     # LiteralExpression
-    | identifier                                  # IdentifierExpression
-    | SELF DOT defaultIdentifierChain                      # SelfAccessExpression
-    | SELF DOT (methodInvoke | methodChain)           # SelfInvokeExpression
-    | SELF DOT identifier ASSIGN expression       # SelfAssignmentExpression
-    | SELF DOT identifierChain ASSIGN expression  # SelfChainedAssignmentExpression
-    | methodInvoke                                # MethodInvokeExpression
-    | methodChain                                 # MethodChainInvokeExpression
+    | reference                                   # ReferenceExpression
+    | instantiate                                 # InstantiateExpression
+    | instantiate DOT chainReference              # InstanceReferenceExpression
     | LPAREN expression RPAREN                    # ParenthesizedExpression
-    | NEW identifier LPAREN argumentList? RPAREN  # InstantiateExpression
     ;
 
-methodChain
-    : identifierChain DOT methodInvoke
+chainReference
+    : reference (DOT reference)*
     ;
 
-identifierChain
-    : identifier (DOT identifier)+
+reference
+    : identifier #IdentifierExpression
+    | methodInvoke # MethodInvokeExpression
+    | arrayAccess #ArrayAccessExpression
     ;
 
-defaultIdentifierChain
-    : identifier (DOT identifier)*
+instantiate
+    : NEW identifier LPAREN argumentList? RPAREN
     ;
 
 methodInvoke

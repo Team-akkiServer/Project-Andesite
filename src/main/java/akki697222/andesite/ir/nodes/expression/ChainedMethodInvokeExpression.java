@@ -5,12 +5,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class MethodChainExpression extends Expression {
+public class ChainedMethodInvokeExpression extends Expression {
     private final String target;
     private final List<Argument> argumentList;
     private final List<IdentifierExpression> chains;
 
-    public MethodChainExpression(String target, List<Argument> argumentList, List<IdentifierExpression> chains) {
+    public ChainedMethodInvokeExpression(String target, List<Argument> argumentList, List<IdentifierExpression> chains) {
         this.target = target;
         this.argumentList = argumentList;
         this.chains = chains;

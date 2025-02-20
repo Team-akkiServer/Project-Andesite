@@ -2,30 +2,54 @@ package akki697222.andesite.ir;
 
 import akki697222.andesite.compiler.AndesiteParser;
 import akki697222.andesite.compiler.AndesiteParserBaseListener;
-import akki697222.andesite.ir.type.Type;
 import akki697222.andesite.exceptions.CompileException;
+import akki697222.andesite.ir.type.Type;
 import akki697222.andesite.ir.nodes.*;
 import akki697222.andesite.ir.nodes.expression.*;
 import akki697222.andesite.ir.nodes.statements.*;
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class IRParser extends AndesiteParserBaseListener {
     private final Program program;
+    private final AndesiteParser parser;
+    private final ErrorListener errorListener;
 
-    public IRParser() {
+    public IRParser(AndesiteParser parser, ErrorListener errorListener) {
         this.program = new Program();
+        this.parser = parser;
+        this.errorListener = errorListener;
+        parser.removeErrorListeners();
+        parser.addErrorListener(errorListener);
     }
 
     @Override
     public void enterProgram(AndesiteParser.ProgramContext ctx) {
+        boolean hasError = false;
         for (AndesiteParser.StatementsContext statement : ctx.statements()) {
+            if (statement.expression() != null) {
+                AndesiteParser.ExpressionContext expressionContext = statement.expression();
+                if (expressionContext instanceof AndesiteParser.PrimaryExpressionContext primaryExpressionContext) {
+
+                } else {
+                    System.err.println(ErrorListener.formatError(
+                            parser.getSourceName(),
+                            expressionContext.getStart().getLine(),
+                            expressionContext.getStart().getCharPositionInLine(),
+                            "SemanticError",
+                             "'" + expressionContext.getText() + "' is a not statement.",
+                            expressionContext.getText(),
+                            expressionContext.getText().length()
+                    ));
+                    hasError = true;
+                }
+            }
             program.addChild(toNode(statement));
+        }
+        if (hasError || errorListener.isHasError()) {
+            throw new CompileException("Failed to compile");
         }
     }
 
@@ -77,8 +101,25 @@ public class IRParser extends AndesiteParserBaseListener {
                     Type.of(functionDeclarationContext.types().getText()),
                     new FunctionParameters(parameters),
                     toBlock(functionDeclarationContext.block() != null ? functionDeclarationContext.block().statements() : new ArrayList<>()),
-                    functionDeclarationContext.functionModifier() != null && functionDeclarationContext.functionModifier().ABSTRACT() != null,
-                    functionDeclarationContext.functionModifier() != null && functionDeclarationContext.functionModifier().STATIC() != null
+                    toFunctionModifier(functionDeclarationContext.functionModifier())
+            );
+        } else if (ruleContext instanceof AndesiteParser.NativeFunctionDeclarationContext nativeFunctionDeclarationContext) {
+            List<FunctionParameter> parameters = new ArrayList<>();
+            if (nativeFunctionDeclarationContext.parameterList() != null) {
+                nativeFunctionDeclarationContext.parameterList().parameter().forEach(parameterContext -> {
+                    parameters.add(new FunctionParameter(parameterContext.identifier().getText(), Type.of(parameterContext.types().getText())));
+                });
+            }
+            AccessModifier accessModifier = AccessModifier.PRIVATE;
+            if (nativeFunctionDeclarationContext.accessModifier() != null) {
+                AccessModifier.valueOf(nativeFunctionDeclarationContext.accessModifier().getText().toUpperCase());
+            }
+            return new NativeFunctionDeclaration(
+                    accessModifier,
+                    toModifier(nativeFunctionDeclarationContext.modifier()),
+                    nativeFunctionDeclarationContext.identifier().getText(),
+                    new FunctionParameters(parameters),
+                    Type.of(nativeFunctionDeclarationContext.types().getText())
             );
         } else if (ruleContext instanceof AndesiteParser.VariableDeclarationContext variableDeclarationContext) {
             AccessModifier accessModifier = AccessModifier.PRIVATE;
@@ -101,7 +142,8 @@ public class IRParser extends AndesiteParserBaseListener {
                     variableDeclarationContext.identifier().getText(),
                     Type.of(variableDeclarationContext.types().getText()),
                     initializeWith,
-                    accessModifier
+                    accessModifier,
+                    toModifier(variableDeclarationContext.modifier())
             );
         } else if (ruleContext instanceof AndesiteParser.ClassDeclarationContext classDeclarationContext) {
             AccessModifier accessModifier = AccessModifier.PRIVATE;
@@ -126,13 +168,26 @@ public class IRParser extends AndesiteParserBaseListener {
                         classBlockContext.interfacesDeclaration()
                         );
             }
+            ClassConstructor constructor = null;
+            if (block != null && classDeclarationContext.classBlock().constructorDeclaration() != null) {
+                for (AndesiteParser.ConstructorDeclarationContext constructorDeclarationContext : classDeclarationContext.classBlock().constructorDeclaration()) {
+                    List<FunctionParameter> parameters = new ArrayList<>();
+                    if (constructorDeclarationContext.parameterList() != null) {
+                        constructorDeclarationContext.parameterList().parameter().forEach(parameterContext -> {
+                            parameters.add(new FunctionParameter(parameterContext.identifier().getText(), Type.of(parameterContext.types().getText())));
+                        });
+                    }
+                    constructor = new ClassConstructor(new FunctionParameters(parameters), toBlock(constructorDeclarationContext.block().statements()));
+                }
+            }
             return new ClassDeclaration(
                     block,
                     classDeclarationContext.identifier().getText(),
-                    classDeclarationContext.ABSTRACT() != null,
+                    toModifier(classDeclarationContext.modifier()),
                     classExtends,
                     classImplements,
-                    accessModifier
+                    accessModifier,
+                    constructor
             );
         } else if (ruleContext instanceof AndesiteParser.InterfacesDeclarationContext interfacesDeclarationContext) {
             AccessModifier accessModifier = AccessModifier.PRIVATE;
@@ -158,6 +213,17 @@ public class IRParser extends AndesiteParserBaseListener {
                     interfacesDeclarationContext.identifier().getText(),
                     classExtends,
                     block
+            );
+        } else if (ruleContext instanceof AndesiteParser.ConstantDeclarationContext constantDeclarationContext) {
+            AccessModifier accessModifier = AccessModifier.PRIVATE;
+            if (constantDeclarationContext.accessModifier() != null) {
+                AccessModifier.valueOf(constantDeclarationContext.accessModifier().getText().toUpperCase());
+            }
+            return new ConstantDeclaration(
+                    constantDeclarationContext.identifier().getText(),
+                    Type.of(constantDeclarationContext.types().getText()),
+                    toExpression(constantDeclarationContext.expression()),
+                    accessModifier
             );
         }
         return null;
@@ -195,26 +261,7 @@ public class IRParser extends AndesiteParserBaseListener {
     public Expression toExpression(AndesiteParser.ExpressionContext expressionContext) {
         switch (expressionContext) {
             case AndesiteParser.PrimaryExpressionContext ctx -> {
-                if (ctx.primary() instanceof AndesiteParser.LiteralExpressionContext ctx_) {
-                    return LiteralExpression.valueOf(ctx_.getRuleContext().getText());
-                } else if (ctx.primary() instanceof AndesiteParser.IdentifierExpressionContext ctx_) {
-                    return new IdentifierExpression(ctx_.identifier().getText());
-                } else if (ctx.primary() instanceof AndesiteParser.MethodInvokeExpressionContext ctx_) {
-                    List<Argument> argumentList = new ArrayList<>();
-                    if (ctx_.methodInvoke().argumentList() != null) {
-                        argumentList = ctx_.methodInvoke().argumentList().argument().stream().map(argumentContext -> new Argument(toExpression(argumentContext.expression()))).toList();
-                    }
-                    return new MethodInvokeExpression(ctx_.methodInvoke().identifier().getText(), argumentList);
-                } else if (ctx.primary() instanceof AndesiteParser.ParenthesizedExpressionContext ctx_) {
-                    return new ParenthesizedExpression(toExpression(ctx_.expression()));
-                } else if (ctx.primary() instanceof AndesiteParser.MethodChainInvokeExpressionContext ctx_) {
-                    List<Argument> argumentList = new ArrayList<>();
-                    if (ctx_.methodChain().methodInvoke().argumentList() != null) {
-                        argumentList = ctx_.methodChain().methodInvoke().argumentList().argument().stream().map(argumentContext -> new Argument(toExpression(argumentContext.expression()))).toList();
-                    }
-                    List<IdentifierExpression> chains = ctx_.methodChain().identifierChain().identifier().stream().map(identifierContext -> new IdentifierExpression(identifierContext.getText())).toList();
-                    return new MethodChainExpression(ctx_.methodChain().methodInvoke().identifier().getText(), argumentList, chains);
-                }
+                return fromPrimaryExpression(ctx.primary());
             }
             case AndesiteParser.LogicalNegationExpressionContext ctx -> {
                 return new LogicalNegationExpression(toExpression(ctx.expression()));
@@ -234,6 +281,12 @@ public class IRParser extends AndesiteParserBaseListener {
             case AndesiteParser.AssignmentExpressionContext ctx -> {
                 return new AssignmentExpression(new IdentifierExpression(ctx.identifier().getText()), toExpression(ctx.expression()));
             }
+            case AndesiteParser.ChainedAssignmentExpressionContext ctx -> {
+                return new ChainedAssignmentExpression(
+                        ctx.identifierChain().identifier().stream().map(identifierContext -> new IdentifierExpression(identifierContext.getText())).toList(),
+                        toExpression(ctx.expression())
+                );
+            }
             case AndesiteParser.ArrayInitializerExpressionContext ctx -> {
                 return new ArrayInitializerExpression(ctx.arrayInitializer().arrayItems() != null ? ctx.arrayInitializer().arrayItems().expression().stream().map(this::toExpression).toList() : new ArrayList<>());
             }
@@ -242,7 +295,7 @@ public class IRParser extends AndesiteParserBaseListener {
                 return new ArrayAssignmentExpression(new IdentifierExpression(arrayAccess.identifier().getText()), IntegerLiteral.convert(arrayAccess.expression().getText()), toExpression(ctx.expression()));
             }
             case AndesiteParser.ArrayAccessExpressionContext ctx -> {
-                return new ArrayAccessExpression(toExpression(ctx.arrayAccess().expression()), new IdentifierExpression(ctx.arrayAccess().identifier().getText()));
+                return new ArrayReferenceExpression(toExpression(ctx.arrayAccess().expression()), new IdentifierExpression(ctx.arrayAccess().identifier().getText()));
             }
             case null, default -> {
             }
@@ -250,7 +303,91 @@ public class IRParser extends AndesiteParserBaseListener {
         return null;
     }
 
+    public MethodInvokeExpression toMethodInvoke(AndesiteParser.MethodInvokeContext ctx) {
+        List<Argument> argumentList = new ArrayList<>();
+        if (ctx.argumentList() != null) {
+            argumentList = ctx.argumentList().argument().stream().map(argumentContext -> new Argument(toExpression(argumentContext.expression()))).toList();
+        }
+        return new MethodInvokeExpression(ctx.identifier().getText(), argumentList);
+    }
 
+    public ChainedMethodInvokeExpression toChainedMethodInvoke(AndesiteParser.MethodChainContext ctx) {
+        List<Argument> argumentList = new ArrayList<>();
+        if (ctx.methodInvoke().argumentList() != null) {
+            argumentList = ctx.methodInvoke().argumentList().argument().stream().map(argumentContext -> new Argument(toExpression(argumentContext.expression()))).toList();
+        }
+        List<IdentifierExpression> chains = ctx.defaultIdentifierChain().identifier().stream().map(identifierContext -> new IdentifierExpression(identifierContext.getText())).toList();
+        return new ChainedMethodInvokeExpression(ctx.methodInvoke().identifier().getText(), argumentList, chains);
+    }
+
+    public Expression fromPrimaryExpression(AndesiteParser.PrimaryContext ctx) {
+        if (ctx instanceof AndesiteParser.LiteralExpressionContext ctx_) {
+            return LiteralExpression.valueOf(ctx_.getRuleContext().getText());
+        } else if (ctx instanceof AndesiteParser.IdentifierExpressionContext ctx_) {
+            return new IdentifierExpression(ctx_.identifier().getText());
+        } else if (ctx instanceof AndesiteParser.MethodInvokeExpressionContext ctx_) {
+            return toMethodInvoke(ctx_.methodInvoke());
+        } else if (ctx instanceof AndesiteParser.MethodChainInvokeExpressionContext ctx_) {
+            return toChainedMethodInvoke(ctx_.methodChain());
+        } else if (ctx instanceof AndesiteParser.SelfAssignmentExpressionContext ctx_) {
+            Expression expression = toExpression(ctx_.expression());
+            AssignmentExpression assignmentExpression;
+            if (expression instanceof IdentifierExpression identifierExpression) {
+                assignmentExpression = new AssignmentExpression(identifierExpression, toExpression(ctx_.expression()));
+            } else {
+                assignmentExpression = (AssignmentExpression) toExpression(ctx_.expression());
+            }
+            return new SelfAssignmentExpression(assignmentExpression);
+        } else if (ctx instanceof AndesiteParser.SelfChainedAssignmentExpressionContext ctx_) {
+            return new SelfChainedAssignmentExpression((ChainedAssignmentExpression) toExpression(ctx_.expression()));
+        } else if (ctx instanceof AndesiteParser.SelfMethodChainExpressionContext ctx_) {
+            return new SelfChainedInvokeExpression(toChainedMethodInvoke(ctx_.methodChain()));
+        } else if (ctx instanceof AndesiteParser.SelfMethodInvokeExpressionContext ctx_) {
+            return new SelfInvokeExpression(toMethodInvoke(ctx_.methodInvoke()));
+        } else if (ctx instanceof AndesiteParser.ParenthesizedExpressionContext ctx_) {
+            return new ParenthesizedExpression(toExpression(ctx_.expression()));
+        }
+        return null;
+    }
+
+    public FunctionModifier toFunctionModifier(List<AndesiteParser.FunctionModifierContext> modifierContext) {
+        boolean isOverride = modifierContext.stream().anyMatch(functionModifierContext -> functionModifierContext.OVERRIDE() != null);
+        boolean isFinal = false;
+        boolean isStatic = false;
+        boolean isAbstract = false;
+        for (AndesiteParser.FunctionModifierContext context : modifierContext) {
+            if (context.modifier() != null) {
+                if (!isFinal) {
+                    isFinal = context.modifier().FINAL() != null;
+                }
+                if (!isStatic) {
+                    isStatic = context.modifier().STATIC() != null;
+                }
+                if (!isAbstract) {
+                    isAbstract = context.modifier().ABSTRACT() != null;
+                }
+            }
+        }
+        return new FunctionModifier(isFinal, isStatic, isAbstract, isOverride);
+    }
+
+    public Modifier toModifier(List<AndesiteParser.ModifierContext> modifierContext) {
+        boolean isFinal = false;
+        boolean isStatic = false;
+        boolean isAbstract = false;
+        for (AndesiteParser.ModifierContext context : modifierContext) {
+            if (!isFinal) {
+                isFinal = context.FINAL() != null;
+            }
+            if (!isStatic) {
+                isStatic = context.STATIC() != null;
+            }
+            if (!isAbstract) {
+                isAbstract = context.ABSTRACT() != null;
+            }
+        }
+        return new Modifier(isFinal, isStatic, isAbstract);
+    }
 
     private Expression createBinaryOperationExpression(AndesiteParser.ExpressionContext leftContext, AndesiteParser.ExpressionContext rightContext, Operation operation) {
         Expression left = toExpression(leftContext);

@@ -67,6 +67,7 @@ FUNCTION: 'fn';
 SKIPS: 'skip';
 NEW: 'new';
 STATIC: 'static';
+NATIVE: 'native';
 
 //代入演算子
 ASSIGN: '=';

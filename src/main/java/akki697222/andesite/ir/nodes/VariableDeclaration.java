@@ -11,12 +11,14 @@ public class VariableDeclaration extends Node {
     private final Type type;
     private final VariableInitializer initializer;
     private final AccessModifier accessModifier;
+    private final Modifier modifier;
 
-    public VariableDeclaration(String name, Type type, VariableInitializer initializer, AccessModifier accessModifier) {
+    public VariableDeclaration(String name, Type type, VariableInitializer initializer, AccessModifier accessModifier, Modifier modifier) {
         this.name = name;
         this.type = type;
         this.initializer = initializer;
         this.accessModifier = accessModifier;
+        this.modifier = modifier;
     }
 
     public String getName() {
@@ -40,13 +42,18 @@ public class VariableDeclaration extends Node {
         return "VariableDeclaration{" +
                 "name='" + name + '\'' +
                 ", type=" + type +
-                ", initializer='" + initializer + '\'' +
+                ", initializer=" + initializer +
                 ", accessModifier=" + accessModifier +
+                ", modifier=" + modifier +
                 '}';
     }
 
     @Override
     public void accept(@NotNull Visitor visitor) {
         visitor.visit(this);
+    }
+
+    public Modifier getModifier() {
+        return modifier;
     }
 }

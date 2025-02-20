@@ -38,6 +38,26 @@ public interface AndesiteParserListener extends ParseTreeListener {
 	 */
 	void exitFunctionDeclaration(AndesiteParser.FunctionDeclarationContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link AndesiteParser#nativeFunctionDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void enterNativeFunctionDeclaration(AndesiteParser.NativeFunctionDeclarationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AndesiteParser#nativeFunctionDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void exitNativeFunctionDeclaration(AndesiteParser.NativeFunctionDeclarationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AndesiteParser#constantDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void enterConstantDeclaration(AndesiteParser.ConstantDeclarationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AndesiteParser#constantDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void exitConstantDeclaration(AndesiteParser.ConstantDeclarationContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link AndesiteParser#functionModifier}.
 	 * @param ctx the parse tree
 	 */
@@ -47,6 +67,16 @@ public interface AndesiteParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFunctionModifier(AndesiteParser.FunctionModifierContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AndesiteParser#modifier}.
+	 * @param ctx the parse tree
+	 */
+	void enterModifier(AndesiteParser.ModifierContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AndesiteParser#modifier}.
+	 * @param ctx the parse tree
+	 */
+	void exitModifier(AndesiteParser.ModifierContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link AndesiteParser#variableDeclaration}.
 	 * @param ctx the parse tree
@@ -324,6 +354,18 @@ public interface AndesiteParserListener extends ParseTreeListener {
 	 */
 	void exitLogicalAndExpression(AndesiteParser.LogicalAndExpressionContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code SelfReferenceExpression}
+	 * labeled alternative in {@link AndesiteParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterSelfReferenceExpression(AndesiteParser.SelfReferenceExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code SelfReferenceExpression}
+	 * labeled alternative in {@link AndesiteParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitSelfReferenceExpression(AndesiteParser.SelfReferenceExpressionContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code PrimaryExpression}
 	 * labeled alternative in {@link AndesiteParser#expression}.
 	 * @param ctx the parse tree
@@ -372,18 +414,6 @@ public interface AndesiteParserListener extends ParseTreeListener {
 	 */
 	void exitBitwiseShiftExpression(AndesiteParser.BitwiseShiftExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ArrayAssignmentExpression}
-	 * labeled alternative in {@link AndesiteParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterArrayAssignmentExpression(AndesiteParser.ArrayAssignmentExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ArrayAssignmentExpression}
-	 * labeled alternative in {@link AndesiteParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitArrayAssignmentExpression(AndesiteParser.ArrayAssignmentExpressionContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code LogicalNegationExpression}
 	 * labeled alternative in {@link AndesiteParser#expression}.
 	 * @param ctx the parse tree
@@ -407,6 +437,18 @@ public interface AndesiteParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitArrayInitializerExpression(AndesiteParser.ArrayInitializerExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code SelfAssignmentExpression}
+	 * labeled alternative in {@link AndesiteParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterSelfAssignmentExpression(AndesiteParser.SelfAssignmentExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code SelfAssignmentExpression}
+	 * labeled alternative in {@link AndesiteParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitSelfAssignmentExpression(AndesiteParser.SelfAssignmentExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code BitwiseAndExpression}
 	 * labeled alternative in {@link AndesiteParser#expression}.
@@ -504,18 +546,6 @@ public interface AndesiteParserListener extends ParseTreeListener {
 	 */
 	void exitNegationExpression(AndesiteParser.NegationExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ArrayAccessExpression}
-	 * labeled alternative in {@link AndesiteParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterArrayAccessExpression(AndesiteParser.ArrayAccessExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ArrayAccessExpression}
-	 * labeled alternative in {@link AndesiteParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitArrayAccessExpression(AndesiteParser.ArrayAccessExpressionContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code MultiplicativeExpression}
 	 * labeled alternative in {@link AndesiteParser#expression}.
 	 * @param ctx the parse tree
@@ -582,101 +612,17 @@ public interface AndesiteParserListener extends ParseTreeListener {
 	 */
 	void exitLiteralExpression(AndesiteParser.LiteralExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code IdentifierExpression}
+	 * Enter a parse tree produced by the {@code ReferenceExpression}
 	 * labeled alternative in {@link AndesiteParser#primary}.
 	 * @param ctx the parse tree
 	 */
-	void enterIdentifierExpression(AndesiteParser.IdentifierExpressionContext ctx);
+	void enterReferenceExpression(AndesiteParser.ReferenceExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code IdentifierExpression}
+	 * Exit a parse tree produced by the {@code ReferenceExpression}
 	 * labeled alternative in {@link AndesiteParser#primary}.
 	 * @param ctx the parse tree
 	 */
-	void exitIdentifierExpression(AndesiteParser.IdentifierExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code SelfAccessExpression}
-	 * labeled alternative in {@link AndesiteParser#primary}.
-	 * @param ctx the parse tree
-	 */
-	void enterSelfAccessExpression(AndesiteParser.SelfAccessExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code SelfAccessExpression}
-	 * labeled alternative in {@link AndesiteParser#primary}.
-	 * @param ctx the parse tree
-	 */
-	void exitSelfAccessExpression(AndesiteParser.SelfAccessExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code SelfInvokeExpression}
-	 * labeled alternative in {@link AndesiteParser#primary}.
-	 * @param ctx the parse tree
-	 */
-	void enterSelfInvokeExpression(AndesiteParser.SelfInvokeExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code SelfInvokeExpression}
-	 * labeled alternative in {@link AndesiteParser#primary}.
-	 * @param ctx the parse tree
-	 */
-	void exitSelfInvokeExpression(AndesiteParser.SelfInvokeExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code SelfAssignmentExpression}
-	 * labeled alternative in {@link AndesiteParser#primary}.
-	 * @param ctx the parse tree
-	 */
-	void enterSelfAssignmentExpression(AndesiteParser.SelfAssignmentExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code SelfAssignmentExpression}
-	 * labeled alternative in {@link AndesiteParser#primary}.
-	 * @param ctx the parse tree
-	 */
-	void exitSelfAssignmentExpression(AndesiteParser.SelfAssignmentExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code SelfChainedAssignmentExpression}
-	 * labeled alternative in {@link AndesiteParser#primary}.
-	 * @param ctx the parse tree
-	 */
-	void enterSelfChainedAssignmentExpression(AndesiteParser.SelfChainedAssignmentExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code SelfChainedAssignmentExpression}
-	 * labeled alternative in {@link AndesiteParser#primary}.
-	 * @param ctx the parse tree
-	 */
-	void exitSelfChainedAssignmentExpression(AndesiteParser.SelfChainedAssignmentExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code MethodInvokeExpression}
-	 * labeled alternative in {@link AndesiteParser#primary}.
-	 * @param ctx the parse tree
-	 */
-	void enterMethodInvokeExpression(AndesiteParser.MethodInvokeExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code MethodInvokeExpression}
-	 * labeled alternative in {@link AndesiteParser#primary}.
-	 * @param ctx the parse tree
-	 */
-	void exitMethodInvokeExpression(AndesiteParser.MethodInvokeExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code MethodChainInvokeExpression}
-	 * labeled alternative in {@link AndesiteParser#primary}.
-	 * @param ctx the parse tree
-	 */
-	void enterMethodChainInvokeExpression(AndesiteParser.MethodChainInvokeExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code MethodChainInvokeExpression}
-	 * labeled alternative in {@link AndesiteParser#primary}.
-	 * @param ctx the parse tree
-	 */
-	void exitMethodChainInvokeExpression(AndesiteParser.MethodChainInvokeExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ParenthesizedExpression}
-	 * labeled alternative in {@link AndesiteParser#primary}.
-	 * @param ctx the parse tree
-	 */
-	void enterParenthesizedExpression(AndesiteParser.ParenthesizedExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ParenthesizedExpression}
-	 * labeled alternative in {@link AndesiteParser#primary}.
-	 * @param ctx the parse tree
-	 */
-	void exitParenthesizedExpression(AndesiteParser.ParenthesizedExpressionContext ctx);
+	void exitReferenceExpression(AndesiteParser.ReferenceExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code InstantiateExpression}
 	 * labeled alternative in {@link AndesiteParser#primary}.
@@ -690,35 +636,85 @@ public interface AndesiteParserListener extends ParseTreeListener {
 	 */
 	void exitInstantiateExpression(AndesiteParser.InstantiateExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link AndesiteParser#methodChain}.
+	 * Enter a parse tree produced by the {@code InstanceReferenceExpression}
+	 * labeled alternative in {@link AndesiteParser#primary}.
 	 * @param ctx the parse tree
 	 */
-	void enterMethodChain(AndesiteParser.MethodChainContext ctx);
+	void enterInstanceReferenceExpression(AndesiteParser.InstanceReferenceExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link AndesiteParser#methodChain}.
+	 * Exit a parse tree produced by the {@code InstanceReferenceExpression}
+	 * labeled alternative in {@link AndesiteParser#primary}.
 	 * @param ctx the parse tree
 	 */
-	void exitMethodChain(AndesiteParser.MethodChainContext ctx);
+	void exitInstanceReferenceExpression(AndesiteParser.InstanceReferenceExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link AndesiteParser#identifierChain}.
+	 * Enter a parse tree produced by the {@code ParenthesizedExpression}
+	 * labeled alternative in {@link AndesiteParser#primary}.
 	 * @param ctx the parse tree
 	 */
-	void enterIdentifierChain(AndesiteParser.IdentifierChainContext ctx);
+	void enterParenthesizedExpression(AndesiteParser.ParenthesizedExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link AndesiteParser#identifierChain}.
+	 * Exit a parse tree produced by the {@code ParenthesizedExpression}
+	 * labeled alternative in {@link AndesiteParser#primary}.
 	 * @param ctx the parse tree
 	 */
-	void exitIdentifierChain(AndesiteParser.IdentifierChainContext ctx);
+	void exitParenthesizedExpression(AndesiteParser.ParenthesizedExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link AndesiteParser#defaultIdentifierChain}.
+	 * Enter a parse tree produced by {@link AndesiteParser#chainReference}.
 	 * @param ctx the parse tree
 	 */
-	void enterDefaultIdentifierChain(AndesiteParser.DefaultIdentifierChainContext ctx);
+	void enterChainReference(AndesiteParser.ChainReferenceContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link AndesiteParser#defaultIdentifierChain}.
+	 * Exit a parse tree produced by {@link AndesiteParser#chainReference}.
 	 * @param ctx the parse tree
 	 */
-	void exitDefaultIdentifierChain(AndesiteParser.DefaultIdentifierChainContext ctx);
+	void exitChainReference(AndesiteParser.ChainReferenceContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code IdentifierExpression}
+	 * labeled alternative in {@link AndesiteParser#reference}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdentifierExpression(AndesiteParser.IdentifierExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code IdentifierExpression}
+	 * labeled alternative in {@link AndesiteParser#reference}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdentifierExpression(AndesiteParser.IdentifierExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code MethodInvokeExpression}
+	 * labeled alternative in {@link AndesiteParser#reference}.
+	 * @param ctx the parse tree
+	 */
+	void enterMethodInvokeExpression(AndesiteParser.MethodInvokeExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code MethodInvokeExpression}
+	 * labeled alternative in {@link AndesiteParser#reference}.
+	 * @param ctx the parse tree
+	 */
+	void exitMethodInvokeExpression(AndesiteParser.MethodInvokeExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ArrayAccessExpression}
+	 * labeled alternative in {@link AndesiteParser#reference}.
+	 * @param ctx the parse tree
+	 */
+	void enterArrayAccessExpression(AndesiteParser.ArrayAccessExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ArrayAccessExpression}
+	 * labeled alternative in {@link AndesiteParser#reference}.
+	 * @param ctx the parse tree
+	 */
+	void exitArrayAccessExpression(AndesiteParser.ArrayAccessExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AndesiteParser#instantiate}.
+	 * @param ctx the parse tree
+	 */
+	void enterInstantiate(AndesiteParser.InstantiateContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AndesiteParser#instantiate}.
+	 * @param ctx the parse tree
+	 */
+	void exitInstantiate(AndesiteParser.InstantiateContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link AndesiteParser#methodInvoke}.
 	 * @param ctx the parse tree

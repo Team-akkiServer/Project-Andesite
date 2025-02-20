@@ -13,11 +13,16 @@ public class ErrorListener extends BaseErrorListener {
     private final String sourceFileName;
     private final CommonTokenStream tokens;
     private final String[] sourceLines;
+    private boolean hasError = false;
 
     public ErrorListener(String sourceFileName, CommonTokenStream tokens, String source) {
         this.sourceFileName = sourceFileName;
         this.tokens = tokens;
         this.sourceLines = source.split("\n");
+    }
+
+    public boolean isHasError() {
+        return hasError;
     }
 
     @Override
@@ -42,13 +47,13 @@ public class ErrorListener extends BaseErrorListener {
                 sourceFileName,
                 line,
                 charPositionInLine + 1,
-                "error",
+                "SyntaxError",
                 msg,
                 errorLine,
                 errorLength);
 
         System.err.print(errorMessage);
-        throw new CompileException("");
+        hasError = true;
     }
 
     /**
@@ -72,14 +77,14 @@ public class ErrorListener extends BaseErrorListener {
             String sourceLine,
             int errorLength) {
 
-        return String.format("%s:%d:%d: %s: %s%n%s%n%s%s%n",
+        return String.format("%s: %s%n%s:%s:%s%n%s%n%s%n",
+                errorType,
+                message,
                 fileName,
                 line,
                 column,
-                errorType,
-                message,
-                sourceLine,
-                " ".repeat(column - 1) + "^",
-                "~".repeat(Math.max(0, errorLength - 1)));
+                "   " + sourceLine,
+                "   " + " ".repeat(Math.max(column - 1, 0)) + "^".repeat(Math.max(0, errorLength))
+        );
     }
 }
