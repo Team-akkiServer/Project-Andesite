@@ -29,6 +29,42 @@ public class AndesiteParserBaseListener implements AndesiteParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterImportPackage(AndesiteParser.ImportPackageContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitImportPackage(AndesiteParser.ImportPackageContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterImportFrom(AndesiteParser.ImportFromContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitImportFrom(AndesiteParser.ImportFromContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterImportAs(AndesiteParser.ImportAsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitImportAs(AndesiteParser.ImportAsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterStatements(AndesiteParser.StatementsContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -557,18 +593,6 @@ public class AndesiteParserBaseListener implements AndesiteParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCompoundAssignmentExpression(AndesiteParser.CompoundAssignmentExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitCompoundAssignmentExpression(AndesiteParser.CompoundAssignmentExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterPrefixExpression(AndesiteParser.PrefixExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -761,37 +785,13 @@ public class AndesiteParserBaseListener implements AndesiteParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIdentifierExpression(AndesiteParser.IdentifierExpressionContext ctx) { }
+	@Override public void enterReference(AndesiteParser.ReferenceContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIdentifierExpression(AndesiteParser.IdentifierExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterMethodInvokeExpression(AndesiteParser.MethodInvokeExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitMethodInvokeExpression(AndesiteParser.MethodInvokeExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterArrayAccessExpression(AndesiteParser.ArrayAccessExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitArrayAccessExpression(AndesiteParser.ArrayAccessExpressionContext ctx) { }
+	@Override public void exitReference(AndesiteParser.ReferenceContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -845,61 +845,133 @@ public class AndesiteParserBaseListener implements AndesiteParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTypeParameter(AndesiteParser.TypeParameterContext ctx) { }
+	@Override public void enterTypeBound(AndesiteParser.TypeBoundContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTypeParameter(AndesiteParser.TypeParameterContext ctx) { }
+	@Override public void exitTypeBound(AndesiteParser.TypeBoundContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTypeParameterBound(AndesiteParser.TypeParameterBoundContext ctx) { }
+	@Override public void enterTypeParameterSuper(AndesiteParser.TypeParameterSuperContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTypeParameterBound(AndesiteParser.TypeParameterBoundContext ctx) { }
+	@Override public void exitTypeParameterSuper(AndesiteParser.TypeParameterSuperContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTypeArgument(AndesiteParser.TypeArgumentContext ctx) { }
+	@Override public void enterTypeParameterExtends(AndesiteParser.TypeParameterExtendsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTypeArgument(AndesiteParser.TypeArgumentContext ctx) { }
+	@Override public void exitTypeParameterExtends(AndesiteParser.TypeParameterExtendsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterWildcardType(AndesiteParser.WildcardTypeContext ctx) { }
+	@Override public void enterTypeParameterSingle(AndesiteParser.TypeParameterSingleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitWildcardType(AndesiteParser.WildcardTypeContext ctx) { }
+	@Override public void exitTypeParameterSingle(AndesiteParser.TypeParameterSingleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTypeArgumentList(AndesiteParser.TypeArgumentListContext ctx) { }
+	@Override public void enterTypeParameterTypeArgument(AndesiteParser.TypeParameterTypeArgumentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTypeArgumentList(AndesiteParser.TypeArgumentListContext ctx) { }
+	@Override public void exitTypeParameterTypeArgument(AndesiteParser.TypeParameterTypeArgumentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTypeParameters(AndesiteParser.TypeParametersContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTypeParameters(AndesiteParser.TypeParametersContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTypeArgumentSuper(AndesiteParser.TypeArgumentSuperContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTypeArgumentSuper(AndesiteParser.TypeArgumentSuperContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTypeArgumentExtends(AndesiteParser.TypeArgumentExtendsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTypeArgumentExtends(AndesiteParser.TypeArgumentExtendsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTypeArgumentSingle(AndesiteParser.TypeArgumentSingleContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTypeArgumentSingle(AndesiteParser.TypeArgumentSingleContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTypeArgumentTypeParameter(AndesiteParser.TypeArgumentTypeParameterContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTypeArgumentTypeParameter(AndesiteParser.TypeArgumentTypeParameterContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTypeArguments(AndesiteParser.TypeArgumentsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTypeArguments(AndesiteParser.TypeArgumentsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

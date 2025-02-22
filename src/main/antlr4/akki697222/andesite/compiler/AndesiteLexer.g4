@@ -55,6 +55,8 @@ CASE: 'case';
 SELF: 'self';
 SUPER: 'super';
 ANY: 'any';
+AS: 'as';
+FROM: 'from';
 DEFAULT: 'default';
 CAST: 'cast';
 CLASS: 'class';
@@ -70,6 +72,8 @@ SKIPS: 'skip';
 NEW: 'new';
 STATIC: 'static';
 NATIVE: 'native';
+PACKAGE: 'package';
+IMPORT: 'import';
 
 //代入演算子
 ASSIGN: '=';
@@ -122,7 +126,7 @@ STRINGS: '"' (~["\\] | '\\' . | '\n')* '"';
 CHARS: '\'' (~['\\] | '\\' .)* '\'';
 IDENTIFIER: [a-zA-Z_][a-zA-Z_0-9]+ | [a-zA-Z];
 WS: [ \t\r\n]+ -> skip;
-COMMENT: '//' .*? '\n'; 
+COMMENT: '//' .*? '\n';
 COMMENT_LONG: '/*' .*? '*/';
 
 fragment Digit: [0-9];

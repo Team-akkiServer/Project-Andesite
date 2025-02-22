@@ -1,5 +1,7 @@
 package akki697222.andesite.ir.nodes.expression;
 
+import akki697222.andesite.ir.nodes.expression.ChainedReferenceExpression;
+
 public class SelfAssignmentExpression extends Expression {
     private final AssignmentExpression assignmentExpression;
 

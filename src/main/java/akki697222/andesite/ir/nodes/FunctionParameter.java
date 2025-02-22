@@ -1,6 +1,6 @@
 package akki697222.andesite.ir.nodes;
 
-import akki697222.andesite.ir.type.Type;
+import akki697222.andesite.ir.nodes.type.Type;
 import akki697222.andesite.ir.Node;
 
 public class FunctionParameter extends Node {

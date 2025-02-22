@@ -3,7 +3,7 @@ package akki697222.andesite.ir.nodes;
 import akki697222.andesite.ir.AccessModifier;
 import akki697222.andesite.ir.Node;
 import akki697222.andesite.ir.nodes.expression.Expression;
-import akki697222.andesite.ir.type.Type;
+import akki697222.andesite.ir.nodes.type.Type;
 
 public class ConstantDeclaration extends Node {
     private final String name;

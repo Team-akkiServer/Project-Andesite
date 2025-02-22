@@ -1,6 +1,6 @@
 package akki697222.andesite.ir.nodes.expression;
 
-import akki697222.andesite.ir.type.primitive.NullType;
+import akki697222.andesite.ir.nodes.type.NullType;
 
 public class NullLiteral extends LiteralExpression<NullType> {
     public NullLiteral() {

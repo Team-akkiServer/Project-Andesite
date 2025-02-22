@@ -4,15 +4,15 @@ import akki697222.andesite.ir.Visitor;
 import org.jetbrains.annotations.NotNull;
 
 public class AssignmentExpression extends Expression {
-    private final IdentifierExpression assignmentTarget;
+    private final ChainedReferenceExpression assignmentTarget;
     private final Expression assignments;
 
-    public AssignmentExpression(IdentifierExpression assignmentTarget, Expression assignments) {
+    public AssignmentExpression(ChainedReferenceExpression assignmentTarget, Expression assignments) {
         this.assignmentTarget = assignmentTarget;
         this.assignments = assignments;
     }
 
-    public IdentifierExpression getAssignmentTarget() {
+    public ChainedReferenceExpression getAssignmentTarget() {
         return assignmentTarget;
     }
 
@@ -22,7 +22,7 @@ public class AssignmentExpression extends Expression {
 
     @Override
     public String toString() {
-        return "'" + assignmentTarget + "' = " + assignments;
+        return assignmentTarget + " = " + assignments;
     }
 
     @Override

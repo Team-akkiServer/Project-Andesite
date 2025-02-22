@@ -8,8 +8,21 @@ program
     : statements*
     ;
 
+importPackage
+    : IMPORT string importFrom importAs?
+    ;
+
+importFrom
+    : FROM identifier (COMMA identifier)*
+    ;
+
+importAs
+    : AS identifier (COMMA identifier)*
+    ;
+
 statements
     : nativeFunctionDeclaration
+    | importPackage SEMI
     | functionDeclaration
     | classDeclaration
     | interfacesDeclaration
@@ -24,11 +37,11 @@ statements
     ;
 
 functionDeclaration
-    : accessModifier? functionModifier* FUNCTION typeArgumentList? identifier LPAREN parameterList? RPAREN COLON types (block | SEMI)
+    : accessModifier? functionModifier* FUNCTION identifier LPAREN parameterList? RPAREN COLON types (block | SEMI)
     ;
 
 nativeFunctionDeclaration
-    : accessModifier? modifier* NATIVE FUNCTION identifier LPAREN parameterList RPAREN COLON types SEMI
+    : accessModifier? NATIVE FUNCTION identifier LPAREN parameterList RPAREN COLON types SEMI
     ;
 
 constantDeclaration
@@ -51,7 +64,7 @@ variableDeclaration
     ;
 
 classDeclaration
-    : accessModifier? modifier* CLASS identifier typeArgumentList? objectiveExtends? objectiveImplements? classBlock
+    : accessModifier? modifier* CLASS identifier typeParameters? objectiveExtends? objectiveImplements? classBlock
     ;
 
 objectiveExtends
@@ -63,7 +76,7 @@ objectiveImplements
     ;
 
 interfacesDeclaration
-    : accessModifier? modifier* INTERFACE identifier typeArgumentList? interfaceExtends? classBlock
+    : accessModifier? modifier* INTERFACE identifier typeParameters? interfaceExtends? classBlock
     ;
 
 interfaceExtends
@@ -117,17 +130,19 @@ classBlock
         | classDeclaration
         | interfacesDeclaration
         | constructorDeclaration
+        | nativeFunctionDeclaration
         )*
     RBRACE
     ;
 
 constructorDeclaration
-    : CONSTRUCTOR LPAREN parameterList? RPAREN block
+    : accessModifier? CONSTRUCTOR LPAREN parameterList? RPAREN block
     ;
 
 accessModifier
     : PUBLIC
     | PRIVATE
+    | PROTECTED
     ;
 
 parameterList
@@ -174,7 +189,7 @@ expression
     | chainReference ASSIGN expression                # AssignmentExpression
     | SELF DOT chainReference                                  # SelfReferenceExpression
     | SELF DOT chainReference ASSIGN expression                # SelfAssignmentExpression
-    | identifier op=(ADD_ASSIGN | SUB_ASSIGN | MUL_ASSIGN | DIV_ASSIGN | MOD_ASSIGN) expression # CompoundAssignmentExpression
+    //| identifier op=(ADD_ASSIGN | SUB_ASSIGN | MUL_ASSIGN | DIV_ASSIGN | MOD_ASSIGN) expression # CompoundAssignmentExpression
     | arrayInitializer                                #ArrayInitializerExpression
     ;
 
@@ -192,7 +207,7 @@ arrayAccess
 
 primary
     : literal                                     # LiteralExpression
-    | reference                                   # ReferenceExpression
+    | chainReference                              # ReferenceExpression
     | instantiate                                 # InstantiateExpression
     | instantiate DOT chainReference              # InstanceReferenceExpression
     | LPAREN expression RPAREN                    # ParenthesizedExpression
@@ -203,9 +218,9 @@ chainReference
     ;
 
 reference
-    : identifier #IdentifierExpression
-    | methodInvoke # MethodInvokeExpression
-    | arrayAccess #ArrayAccessExpression
+    : identifier
+    | methodInvoke
+    | arrayAccess
     ;
 
 instantiate
@@ -221,29 +236,37 @@ types
     | baseTypes LBRACKET RBRACKET #ArrayType
     ;
 
-typeParameterBound
-    : EXTENDS types
-    | SUPER types
+typeBound
+    : types (B_AND types)*
     ;
+
+typeParameter
+    : identifier SUPER typeBound? #TypeParameterSuper
+    | identifier EXTENDS typeBound? #TypeParameterExtends
+    | identifier #TypeParameterSingle
+    | typeArguments #TypeParameterTypeArgument
+    ;
+
+typeParameters
+    : LT typeParameter (COMMA typeParameter)* GT
+    ;
+
 
 typeArgument
-    : identifier typeParameterBound? # IdentifierTypeParameter
-    | wildcard typeParameterBound? #WildCardedTypeParameter
+    : QUESTION SUPER typeBound? #TypeArgumentSuper
+    | QUESTION EXTENDS typeBound? #TypeArgumentExtends
+    | types #TypeArgumentSingle
+    | identifier #TypeArgumentTypeParameter
     ;
 
-wildcard
-    : ANY
-    | QUESTION
-    ;
-
-typeArgumentList
+typeArguments
     : LT typeArgument (COMMA typeArgument)* GT
     ;
 
 baseTypes
     : primitive #PrimitiveType
     | identifier #CustomType
-    | identifier typeArgumentList #TypeParameterType
+    | identifier typeArguments #TypeParameterType
     ;
 
 primitive

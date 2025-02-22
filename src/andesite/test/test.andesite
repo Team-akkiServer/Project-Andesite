@@ -1,0 +1,3 @@
+import "out" from Output as out;
+
+out.println("This is a first execution test.");

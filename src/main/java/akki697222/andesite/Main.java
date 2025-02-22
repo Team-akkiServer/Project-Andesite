@@ -5,7 +5,7 @@ import akki697222.andesite.compiler.AndesiteParser;
 import akki697222.andesite.exceptions.CompileException;
 import akki697222.andesite.ir.ErrorListener;
 import akki697222.andesite.ir.IRParser;
-import akki697222.andesite.ir.nodes.Program;
+import akki697222.andesite.ir.nodes.type.Program;
 import org.antlr.v4.gui.TreeViewer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
@@ -15,35 +15,56 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Objects;
+import java.nio.file.*;
+import java.util.*;
 
 public class Main {
     public static Logger logger = LoggerFactory.getLogger(Main.class);
     public static String fileName = "";
+    public static Map<String, Program> sources = new HashMap<>();
 
     public static void main(String[] args) {
         try {
-            String sourceFileName = "test.andesite";
-            Program parsedProgram = compileToIR(sourceFileName);
-            if (parsedProgram != null) {
-                logger.info(parsedProgram.toString());
-            }
-
             long startTime = System.currentTimeMillis();
+            processSources("src/andesite");
             long endTime = System.currentTimeMillis();
-            System.out.println("実行時間: " + (endTime - startTime) + " ミリ秒");
+            logger.info("パースにかかった時間: {}ms", endTime - startTime);
+            StringBuilder parsedSources = new StringBuilder();
+            sources.forEach(((packagePath, program) -> parsedSources.append("Package: ").append(packagePath).append(" ").append(program).append("\n")));
+            logger.info("パースされたプログラム:\n{}", parsedSources);
+
+            startTime = System.currentTimeMillis();
+
+            
+
+            endTime = System.currentTimeMillis();
+            logger.info("実行にかかった時間: {}ms", endTime - startTime);
         } catch (IOException e) {
             logger.error("", e);
         }
     }
 
-    private static Program compileToIR(String sourceFileName) throws IOException {
+    private static void processSources(String sourceFolder) throws IOException {
+        File source = new File(sourceFolder);
+        File[] files = source.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    processSources(file.getPath());
+                } else if (file.isFile() && file.getName().endsWith(".andesite")) {
+                    Program parsed = compileToIR(file.getPath(), false);
+                    if (parsed != null) {
+                        sources.put(file.getPath().replace("\\", "/"), parsed);
+                    }
+                }
+            }
+        }
+    }
+
+    private static Program compileToIR(String sourceFileName, boolean openTreeViewer) throws IOException {
         CharStream charStream = CharStreams.fromFileName(sourceFileName);
         Path path = Paths.get(sourceFileName);
         String source = Files.readString(path, StandardCharsets.UTF_8);
@@ -60,11 +81,10 @@ public class Main {
 
         ParseTree tree = parser.program();
 
-        TreeViewer viewer = new TreeViewer(
-                Arrays.asList(parser.getRuleNames()),
-                tree
-        );
-        viewer.open();
+        if (openTreeViewer) {
+            TreeViewer viewer = new TreeViewer(Arrays.asList(parser.getRuleNames()), tree);
+            viewer.open();
+        }
 
         boolean exitWithError = false;
         try {

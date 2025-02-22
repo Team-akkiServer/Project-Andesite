@@ -1,13 +1,10 @@
-package akki697222.andesite.ir.nodes;
+package akki697222.andesite.ir.nodes.expression;
 
-import akki697222.andesite.ir.Node;
-import akki697222.andesite.ir.nodes.expression.*;
-
-public class Reference extends Node {
+public class ReferenceExpression extends Expression {
     private final ReferenceType type;
     private final Expression expression;
 
-    public Reference(ReferenceType type, Expression expression) {
+    public ReferenceExpression(ReferenceType type, Expression expression) {
         this.type = type;
         this.expression = expression;
     }

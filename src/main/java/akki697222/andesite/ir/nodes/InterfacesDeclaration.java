@@ -2,24 +2,27 @@ package akki697222.andesite.ir.nodes;
 
 import akki697222.andesite.ir.AccessModifier;
 import akki697222.andesite.ir.Node;
+import akki697222.andesite.ir.Visitor;
 import akki697222.andesite.ir.nodes.expression.IdentifierExpression;
+import akki697222.andesite.ir.nodes.type.Type;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 public class InterfacesDeclaration extends Node {
     private final AccessModifier accessModifier;
     private final String name;
-    private final IdentifierExpression interfacesExtends;
+    private final List<Type> interfacesExtends;
     private final ClassBlock classBlock;
 
-    public InterfacesDeclaration(AccessModifier accessModifier, String name, IdentifierExpression interfacesExtends, ClassBlock classBlock) {
+    public InterfacesDeclaration(AccessModifier accessModifier, String name, List<Type> interfacesExtends, ClassBlock classBlock) {
         this.accessModifier = accessModifier;
         this.name = name;
         this.interfacesExtends = interfacesExtends;
         this.classBlock = classBlock;
     }
 
-    public IdentifierExpression getInterfacesExtends() {
+    public List<Type> getInterfaceExtends() {
         return interfacesExtends;
     }
 
@@ -43,5 +46,10 @@ public class InterfacesDeclaration extends Node {
                 ", interfacesExtends=" + interfacesExtends +
                 ", classBlock=" + classBlock +
                 '}';
+    }
+
+    @Override
+    public void accept(@NotNull Visitor visitor) {
+        visitor.visit(this);
     }
 }

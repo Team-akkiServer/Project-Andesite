@@ -11,12 +11,14 @@ public class ClassBlock extends Node {
     private final List<FunctionDeclaration> methods;
     private final List<ClassDeclaration> classes;
     private final List<InterfacesDeclaration> interfaces;
+    private final List<NativeFunctionDeclaration> nativeMethods;
 
-    public ClassBlock(List<VariableDeclaration> fields, List<FunctionDeclaration> methods, List<ClassDeclaration> classes, List<InterfacesDeclaration> interfaces) {
+    public ClassBlock(List<VariableDeclaration> fields, List<FunctionDeclaration> methods, List<ClassDeclaration> classes, List<InterfacesDeclaration> interfaces, List<NativeFunctionDeclaration> nativeMethods) {
         this.fields = fields;
         this.methods = methods;
         this.classes = classes;
         this.interfaces = interfaces;
+        this.nativeMethods = nativeMethods;
         fields.forEach(field -> field.setParent(this));
         methods.forEach(method -> method.setParent(this));
     }
@@ -29,6 +31,10 @@ public class ClassBlock extends Node {
         return fields;
     }
 
+    public List<NativeFunctionDeclaration> getNativeMethods() {
+        return nativeMethods;
+    }
+
     @Override
     public void accept(@NotNull Visitor visitor) {
         for (VariableDeclaration variableDeclaration : fields) {
@@ -36,6 +42,15 @@ public class ClassBlock extends Node {
         }
         for (FunctionDeclaration functionDeclaration : methods) {
             functionDeclaration.accept(visitor);
+        }
+        for (ClassDeclaration classDeclaration : classes) {
+            classDeclaration.accept(visitor);
+        }
+        for (InterfacesDeclaration interfacesDeclaration : interfaces) {
+            interfacesDeclaration.accept(visitor);
+        }
+        for (NativeFunctionDeclaration nativeFunctionDeclaration : nativeMethods) {
+            nativeFunctionDeclaration.accept(visitor);
         }
     }
 
@@ -54,6 +69,7 @@ public class ClassBlock extends Node {
                 ", methods=" + methods +
                 ", classes=" + classes +
                 ", interfaces=" + interfaces +
+                ", nativeMethods=" + nativeMethods +
                 '}';
     }
 }

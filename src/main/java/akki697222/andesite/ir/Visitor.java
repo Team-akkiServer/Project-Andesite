@@ -3,18 +3,24 @@ package akki697222.andesite.ir;
 import akki697222.andesite.ir.nodes.*;
 import akki697222.andesite.ir.nodes.expression.*;
 import akki697222.andesite.ir.nodes.statements.*;
+import akki697222.andesite.ir.nodes.type.Program;
 
 public interface Visitor {
     void visit(Node node);
-    void visit(Program program);
+    //Declarations
     void visit(FunctionDeclaration functionDeclaration);
+    void visit(NativeFunctionDeclaration nativeFunctionDeclaration);
     void visit(VariableDeclaration variableDeclaration);
-    void visit(ReturnStatement returnStatement);
-    void visit(AssignmentExpression assignmentExpression);
-    void visit(MethodInvokeExpression methodInvokeExpression);
-    void visit(PrintStatement printStatement);
+    void visit(ClassDeclaration classDeclaration);
+    void visit(InterfacesDeclaration interfacesDeclaration);
+    //Statements
     void visit(IfStatement ifStatement);
     void visit(ForStatement forStatement);
     void visit(WhileStatement whileStatement);
-    void visit(ArrayAssignmentExpression arrayAssignmentExpression);
+    void visit(RepeatStatement repeatStatement);
+    void visit(ReturnStatement returnStatement);
+    void visit(ImportPackage importPackage);
+    //Others
+    void visit(ChainedReferenceExpression chainedReferenceExpression);
+    void visit(Program program);
 }

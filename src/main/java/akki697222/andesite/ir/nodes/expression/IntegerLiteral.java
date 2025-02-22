@@ -1,6 +1,6 @@
 package akki697222.andesite.ir.nodes.expression;
 
-public class IntegerLiteral extends LiteralExpression<Integer> {
+public class IntegerLiteral extends NumberLiteral<Integer> {
     public IntegerLiteral(Integer value) {
         super(value);
     }

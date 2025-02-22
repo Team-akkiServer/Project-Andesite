@@ -7,19 +7,19 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class MethodInvokeExpression extends Expression {
-    private final String target;
-    private final List<Argument> argumentList;
+    private final IdentifierExpression target;
+    private final ArgumentList argumentList;
 
-    public MethodInvokeExpression(String target, List<Argument> argumentList) {
+    public MethodInvokeExpression(IdentifierExpression target, ArgumentList argumentList) {
         this.target = target;
         this.argumentList = argumentList;
     }
 
-    public String getTarget() {
+    public IdentifierExpression getTarget() {
         return target;
     }
 
-    public List<Argument> getArgumentList() {
+    public ArgumentList getArgumentList() {
         return argumentList;
     }
 
@@ -30,6 +30,9 @@ public class MethodInvokeExpression extends Expression {
 
     @Override
     public String toString() {
-        return "INVOKE@" + target + (!argumentList.isEmpty() ? "#" + argumentList : "");
+        return "MethodInvokeExpression{" +
+                "target='" + target + '\'' +
+                ", argumentList=" + argumentList +
+                '}';
     }
 }

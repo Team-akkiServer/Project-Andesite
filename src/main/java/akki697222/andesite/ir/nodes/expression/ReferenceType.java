@@ -1,9 +1,4 @@
-package akki697222.andesite.ir.nodes;
-
-import akki697222.andesite.ir.nodes.expression.ArrayReferenceExpression;
-import akki697222.andesite.ir.nodes.expression.Expression;
-import akki697222.andesite.ir.nodes.expression.IdentifierExpression;
-import akki697222.andesite.ir.nodes.expression.MethodInvokeExpression;
+package akki697222.andesite.ir.nodes.expression;
 
 public enum ReferenceType {
     INVOKE(MethodInvokeExpression.class),

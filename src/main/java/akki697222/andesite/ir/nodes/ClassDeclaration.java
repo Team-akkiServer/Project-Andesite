@@ -2,7 +2,10 @@ package akki697222.andesite.ir.nodes;
 
 import akki697222.andesite.ir.AccessModifier;
 import akki697222.andesite.ir.Node;
+import akki697222.andesite.ir.Visitor;
 import akki697222.andesite.ir.nodes.expression.IdentifierExpression;
+import akki697222.andesite.ir.nodes.type.Type;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -11,12 +14,12 @@ public class ClassDeclaration extends Node {
     private final ClassBlock classBlock;
     private final String name;
     private final Modifier modifier;
-    private final IdentifierExpression classExtends;
-    private final List<IdentifierExpression> interfacesImplements;
+    private final Type classExtends;
+    private final List<Type> interfacesImplements;
     private final AccessModifier accessModifier;
     private final @Nullable ClassConstructor constructor;
 
-    public ClassDeclaration(ClassBlock classBlock, String name, Modifier modifier, IdentifierExpression classExtends, List<IdentifierExpression> interfacesImplements, AccessModifier accessModifier, @Nullable ClassConstructor constructor) {
+    public ClassDeclaration(ClassBlock classBlock, String name, Modifier modifier, Type classExtends, List<Type> interfacesImplements, AccessModifier accessModifier, @Nullable ClassConstructor constructor) {
         this.classBlock = classBlock;
         this.name = name;
         this.modifier = modifier;
@@ -26,11 +29,11 @@ public class ClassDeclaration extends Node {
         this.constructor = constructor;
     }
 
-    public List<IdentifierExpression> getInterfacesImplements() {
+    public List<Type> getInterfacesImplements() {
         return interfacesImplements;
     }
 
-    public IdentifierExpression getClassExtends() {
+    public Type getClassExtends() {
         return classExtends;
     }
 
@@ -65,5 +68,10 @@ public class ClassDeclaration extends Node {
 
     public @Nullable ClassConstructor getConstructor() {
         return constructor;
+    }
+
+    @Override
+    public void accept(@NotNull Visitor visitor) {
+        visitor.visit(this);
     }
 }
